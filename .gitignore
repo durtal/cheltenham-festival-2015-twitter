@@ -1,3 +1,4 @@
 cacert.pem
 R/setup_auth.R
 data/my_auth.RData
+.Rproj.user
