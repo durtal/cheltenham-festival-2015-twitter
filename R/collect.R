@@ -16,6 +16,6 @@ horses <- as.character(horses)
 horses <- c(horses, "cheltenham", "cheltfest", "ladbrokes", "paddypower", "willhillbet", "betvictor", "coral", "betfair")
 
 # filterStream(file.name = "../data/day_one.json", track = horses, timeout = 25200, oauth = my_oauth)
-filterStream(file.name = "../data/day_two.json", track = horses, timeout = 28800, oauth = my_oauth)
+filterStream(file.name = "../data/day_two.json", track = horses, timeout = 25200, oauth = my_oauth)
 # filterStream(file.name = "../data/day_three.json", track = horses, timeout = 25200, oauth = my_oauth)
 # filterStream(file.name = "../data/day_four.json", track = horses, timeout = 25200, oauth = my_oauth)

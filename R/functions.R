@@ -18,12 +18,12 @@ tweet_cleaner <- function(tweets, concat_terms, rename_odds = FALSE, rm_punct = 
     # remove control characters
     tweets <- stringr::str_replace_all(tweets, "[[:cntrl:]]", " ")
     # remove links
-    tweets <- stringr:str_replace_all(tweets, "(http[^ ]*)|(www\\.[^ ]*)", " ")
+    tweets <- stringr::str_replace_all(tweets, "(http[^ ]*)|(www\\.[^ ]*)", " ")
     # convert tweets to lower case
     tweets <- tolower(tweets)
     
     # if concat_terms is provided, loop through and concatenate
-    if(concat_terms) {
+    if(exists(concat_terms)) {
         concat_terms <- tolower(concat_terms)
         for(term in seq_along(concat_terms)) {
             tweets <- stringr::str_replace_all(tweets,
@@ -66,7 +66,7 @@ tweet_cleaner <- function(tweets, concat_terms, rename_odds = FALSE, rm_punct = 
 findtweets <- function(tweets, searchfor, counts = FALSE) {
     
     # make terms lower case, replace spaces/punctuation with " ?" for flexible searches
-    searchfor <- tolower(stringr::str_replace_all(searchfor, "\\s+|[[:punct:]]+", " ?"))
+    searchfor <- tolower(stringr::str_replace_all(searchfor, "\\s+|[[:punct:]]", " ?"))
     # if counts for number of terms per tweet then counts = TRUE
     if(counts) {
         # for each term in the searchfor argument, return the indices of the tweets
@@ -79,7 +79,7 @@ findtweets <- function(tweets, searchfor, counts = FALSE) {
         indices <- grepl(paste0(searchfor, collapse = "|"), tweets)
     }
     
-    return(tweets)
+    return(indices)
 }
 
 #' find and concatenate terms
