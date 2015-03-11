@@ -4,7 +4,7 @@
 library(rvest)
 library(stringr)
 
-### 
+###
 # base url
 tomorrow <- Sys.Date() + 1
 
@@ -12,7 +12,7 @@ RP_url <- sprintf(fmt = "http://www.racingpost.com/horses2/cards/meeting_of_card
 htmlfile <- RP_url %>%
     html()
 # collect runners index
-r_id <- htmlfile %>% 
+r_id <- htmlfile %>%
     html_nodes("td:nth-child(1) b") %>%
     html_text() %>%
     as.numeric()
@@ -39,13 +39,13 @@ race_runners <- htmlfile %>%
     as.numeric()
 
 # create dataframe
-day_two <- data.frame(date = Sys.Date() + 1, 
+day_three <- data.frame(date = Sys.Date() + 1,
                       time = rep(race_time, race_runners),
                       race = rep(race_name, race_runners),
                       runners = rep(race_runners, race_runners),
                       horse_id = r_id,
                       horse = r_name)
-day_two$G1 <- grepl(pattern = "Grade 1", x = day_two$race, ignore.case = TRUE)
+day_three$G1 <- grepl(pattern = "Grade 1", x = day_three$race, ignore.case = TRUE)
 
 rm(RP_url, htmlfile, r_id, r_name, race_name, race_runners, race_time, tomorrow)
-save(day_one, file = "data/day_one.RData")
+save(day_three, file = "data/day_three.RData")
