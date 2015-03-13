@@ -1,0 +1,10 @@
+---
+title: "useful links"
+---
+
+This page contains links to various articles, packages, that I found interesting and/or useful.
+
+### R packages
+
+* [streamR](https://github.com/pablobarbera/streamR)
+    - [intro blog](http://pablobarbera.com/blog/archives/1.html) by Pablo Barbera (package author)

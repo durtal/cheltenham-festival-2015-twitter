@@ -1,0 +1,31 @@
+---
+title: "Intro"
+---
+
+The Cheltenham Festival dominates the National Hunt season, with the 4 day Festival often being discussed long in advance.  Twitter is a platform on which fans, pundits, punters, trainers, jockeys, gamblers can interact and debate about the horse racing.  For this reason, I wanted to collect tweets pertaining to the Cheltenham Festival.
+
+This is the second year I have done this, the first was last year (2014), and I wrote up a few views on my old wordpress blog, find links [here](https://protractedcontemplation.wordpress.com/2014/05/01/cheltenham-festival-twitter-crowd-part-one-2/) and [here](https://protractedcontemplation.wordpress.com/2014/05/02/cheltenham-festival-twitter-crowd-part-two/).  
+
+This year, having learnt more about R, I am using it and [rmarkdown](http://rmarkdown.rstudio.com/) to build this dedicated site, for people to peruse at their leisure.  You will find a variety of articles include analysis of twitter per race day; overviews comparing the four days; specific Championship races; comparisons of Championship winners.
+
+Code and data (tweets, etc) is available on github, find it [here](https://github.com/durtal/cheltenham-festival-2015-twitter), which would allow others to perhaps contribute posts/analysis to this site.  Don't hesitate to ask me any questions on twitter, either [UTVilla](https://twitter.com/UTVilla) or [_RcappeR](https://twitter.com/_RcappeR).
+
+### Tweets
+
+Tweets were collected using the [streamR](https://github.com/pablobarbera/streamR) R package created by [Pablo Barbera](https://twitter.com/p_barbera).  The runners in each of the Championship races on each day were 'tracked' via Twitter's streaming API, and tweets mentioning one (or more) of the runners were collected.  A few other words were also used, these included "cheltenham", "cheltfest" and a number of the larger bookmakers (based on their twitter usernames), a full list can be seen in the table below, it includes the number of terms that were used:
+
+```{r echo=FALSE}
+load("data/day_one.RData")
+load("data/day_two.RData")
+load("data/day_three.RData")
+load("data/day_four.RData")
+
+other_words <- c("cheltenham", "cheltfest", "ladbrokes", "paddypower", "willhillbet", "betvictor", "coral", "betfair")
+```
+
+Day | horses 'tracked' | other | terms
+----|------------------|-------|---------
+One | _`r paste0(subset(day_one, G1)$horse)`_ | _`r other_words`_ | `r length(c(subset(day_one, G1)$horse, other_words))`
+Two | _`r paste0(subset(day_two, G1)$horse)`_ | _`r other_words`_ | `r length(c(subset(day_two, G1)$horse, other_words))`
+Three | _`r paste0(subset(day_three, G1)$horse)`_ | _`r other_words`_ | `r length(c(subset(day_three, G1)$horse, other_words))`
+Four | _`r paste0(subset(day_four, G1)$horse)`_ | _`r other_words`_ | `r length(c(subset(day_four, G1)$horse, other_words))`
