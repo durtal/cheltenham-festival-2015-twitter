@@ -39,13 +39,13 @@ race_runners <- htmlfile %>%
     as.numeric()
 
 # create dataframe
-day_three <- data.frame(date = Sys.Date() + 1,
+day_four <- data.frame(date = Sys.Date() + 1,
                       time = rep(race_time, race_runners),
                       race = rep(race_name, race_runners),
                       runners = rep(race_runners, race_runners),
                       horse_id = r_id,
                       horse = r_name)
-day_three$G1 <- grepl(pattern = "Grade 1", x = day_three$race, ignore.case = TRUE)
+day_four$G1 <- grepl(pattern = "Grade 1", x = day_four$race, ignore.case = TRUE)
 
 rm(RP_url, htmlfile, r_id, r_name, race_name, race_runners, race_time, tomorrow)
 save(day_three, file = "data/day_three.RData")
