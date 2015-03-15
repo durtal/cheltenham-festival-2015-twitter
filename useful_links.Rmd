@@ -7,4 +7,29 @@ This page contains links to various articles, packages, that I found interesting
 ### R packages
 
 * [streamR](https://github.com/pablobarbera/streamR)
-    - [intro blog](http://pablobarbera.com/blog/archives/1.html) by Pablo Barbera (package author)
+* [hadleyverse](http://adolfoalvarez.cl/the-hitchhikers-guide-to-the-hadleyverse/) Hadley Wickham packages
+    - [stringr](https://github.com/hadley/stringr) - string manipulation
+    - [ggplot2](https://github.com/hadley/ggplot2) - visualisation
+    - [dplyr](https://github.com/hadley/dplyr) - data manipulation
+    - [rvest](https://github.com/hadley/rvest) - web scraping
+* [rmarkdown](http://rmarkdown.rstudio.com/) - used to build this site!
+
+### Blogs
+
+* [streamR intro](http://pablobarbera.com/blog/archives/1.html) by [Pablo Barbera](https://twitter.com/p_barbera)
+* [Sentiment Analysis](https://jeffreybreen.wordpress.com/2011/07/04/twitter-text-mining-r-slides/) by Jeffrey Breen
+* [ROAuth and twitteR](http://davetang.org/muse/2013/04/06/using-the-r_twitter-package/) - accessing Twitter's API
+* [Presidential Sentiment Analysis](http://nerdsrule.co/2012/10/08/presidential-candidate-sentiment-analysis/)
+* [Handling and Processing Strings](https://gastonsanchez.wordpress.com/2013/09/22/handling-and-processing-strings-in-r/) by Gaston Sanchez
+
+* My look at the 2014 Cheltenham Festival
+    - [part 1](https://protractedcontemplation.wordpress.com/2014/05/01/cheltenham-festival-twitter-crowd-part-one-2/)
+    - [part 2](https://protractedcontemplation.wordpress.com/2014/05/02/cheltenham-festival-twitter-crowd-part-two/)
+
+### R Learning resources
+
+* [Stat 545](http://stat545-ubc.github.io/) - Data wrangling, exploration and Analysis with R - by [Dr Jennifer Bryan](https://twitter.com/JennyBryan)
+    - this site contains tutorials on all manner of R related things, a superb resource
+* [Dataschool](http://www.dataschool.io/)
+* [r-bloggers](http://www.r-bloggers.com/)
+* [StatMethods](http://www.statmethods.net/index.html)
