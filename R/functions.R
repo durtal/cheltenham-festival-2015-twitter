@@ -11,7 +11,7 @@
 #' @param rename_odds replace digits that are likely betting odds, dates, or
 #' times (eg, 3/1, 3.55, 3-1, 4:50) and replaces them with the word 'odds'
 #' @param rm_punct remove punctuation
-tweet_cleaner <- function(tweets, concat_terms, rename_odds = FALSE, rm_punct = FALSE) {
+tweet_cleaner <- function(tweets, concat_terms = NULL, rename_odds = FALSE, rm_punct = FALSE) {
     
     # remove emoticons/unrecognised characters
     tweets <- iconv(tweets, from = "latin1", to = "ASCII", sub = "")
@@ -23,7 +23,7 @@ tweet_cleaner <- function(tweets, concat_terms, rename_odds = FALSE, rm_punct = 
     tweets <- tolower(tweets)
     
     # if concat_terms is provided, loop through and concatenate
-    if(exists(concat_terms)) {
+    if(!is.null(concat_terms)) {
         concat_terms <- tolower(concat_terms)
         for(term in seq_along(concat_terms)) {
             tweets <- stringr::str_replace_all(tweets,

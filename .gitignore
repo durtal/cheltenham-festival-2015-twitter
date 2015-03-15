@@ -5,3 +5,5 @@ data/my_auth.RData
 R/*.RData
 R/*.Rout
 data/*.json
+.RData
+.Rhistory
