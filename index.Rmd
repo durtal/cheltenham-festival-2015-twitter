@@ -10,22 +10,4 @@ This year, having learnt more about R, I am using it and [rmarkdown](http://rmar
 
 Code and data (tweets, etc) is available on github, find it [here](https://github.com/durtal/cheltenham-festival-2015-twitter), which would allow others to perhaps contribute posts/analysis to this site.  Don't hesitate to ask me any questions on twitter, either [UTVilla](https://twitter.com/UTVilla) or [_RcappeR](https://twitter.com/_RcappeR).
 
-### Tweets
-
-Tweets were collected using the [streamR](https://github.com/pablobarbera/streamR) R package created by [Pablo Barbera](https://twitter.com/p_barbera).  The runners in each of the Championship races on each day were 'tracked' via Twitter's streaming API, and tweets mentioning one (or more) of the runners were collected.  A few other words were also used, these included "cheltenham", "cheltfest" and a number of the larger bookmakers (based on their twitter usernames), a full list can be seen in the table below, it includes the number of terms that were used:
-
-```{r echo=FALSE}
-load("data/day_one.RData")
-load("data/day_two.RData")
-load("data/day_three.RData")
-load("data/day_four.RData")
-
-other_words <- c("cheltenham", "cheltfest", "ladbrokes", "paddypower", "willhillbet", "betvictor", "coral", "betfair")
-```
-
-Day | horses 'tracked' | other | terms
-----|------------------|-------|---------
-One | _`r paste0(subset(day_one, G1)$horse)`_ | _`r other_words`_ | `r length(c(subset(day_one, G1)$horse, other_words))`
-Two | _`r paste0(subset(day_two, G1)$horse)`_ | _`r other_words`_ | `r length(c(subset(day_two, G1)$horse, other_words))`
-Three | _`r paste0(subset(day_three, G1)$horse)`_ | _`r other_words`_ | `r length(c(subset(day_three, G1)$horse, other_words))`
-Four | _`r paste0(subset(day_four, G1)$horse)`_ | _`r other_words`_ | `r length(c(subset(day_four, G1)$horse, other_words))`
+There are three parts to the site, a section that looks at the preparation, from collecting tweets to cleaning the data ahead of analysis.  A section that looks at the four individual days and overviews of that days races.  The final section looks at the individual races.  The preparation section contains the most code as cleaning and collection of tweets is explained, while other sections is primarily content, with plenty of plots.

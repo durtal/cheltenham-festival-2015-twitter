@@ -13,6 +13,8 @@ This page contains links to various articles, packages, that I found interesting
     - [dplyr](https://github.com/hadley/dplyr) - data manipulation
     - [rvest](https://github.com/hadley/rvest) - web scraping
 * [rmarkdown](http://rmarkdown.rstudio.com/) - used to build this site!
+* [RcappeR](https://github.com/durtal/RcappeR) - used for the custom ggplot2 theme
+* [wesanderson](https://github.com/karthik/wesanderson) - used for nice palettes
 
 ### Blogs
 

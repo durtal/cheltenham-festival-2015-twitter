@@ -1,0 +1,38 @@
+---
+title: "collecting tweets"
+---
+
+
+```{r echo=FALSE}
+load("data/day_one.RData")
+load("data/day_two.RData")
+load("data/day_three.RData")
+load("data/day_four.RData")
+
+other_words <- c("cheltenham", "cheltfest", "ladbrokes", "paddypower", "willhillbet", "betvictor", "coral", "betfair")
+```
+
+<div class="row">
+<div class="col-sm-8">
+Tweets were collected using the [streamR](https://github.com/pablobarbera/streamR) R package created by [Pablo Barbera](https://twitter.com/p_barbera).  The runners in each of the Championship races on each day were 'tracked' via Twitter's streaming API, and tweets mentioning one (or more) of the runners were collected.  A few other words were also used, these included "cheltenham", "cheltfest" and a number of the larger bookmakers (based on their twitter usernames).  A full list can be seen [here](http://durtal.github.io/cheltenham-festival-2015-twitter/data/initial_search.txt), the table below shows the horses/phrases 'tracked' on each day.
+
+Tweets were collected on each of the four Festival days for 7hours, starting at 10am and ending at 5pm; unfortunately on Wednesday (Day Two) the collection of tweets was prematurely ended, although all Grade 1 races on that day had already been run.  Overall, **`r sum(length(day_one_tweets$text), length(day_two_tweets$text), length(day_three_tweets$text), length(day_four_tweets$text))`** tweets were collected, the table shows the number of tweets collected on each day:
+</div>
+<div class="col-sm-4">
+Day | n tweets
+----|---------
+One | `r length(day_one_tweets$text)`
+Two | `r length(day_two_tweets$text)`
+Three | `r length(day_three_tweets$text)`
+Four | `r length(day_four_tweets$text)`
+</div>
+</div>
+
+<hr>
+
+Day | horses 'tracked' | other | terms
+----|------------------|-------|---------
+One | _`r paste0(subset(day_one, G1)$horse)`_ | _`r other_words`_ | `r length(c(subset(day_one, G1)$horse, other_words))`
+Two | _`r paste0(subset(day_two, G1)$horse)`_ | _`r other_words`_ | `r length(c(subset(day_two, G1)$horse, other_words))`
+Three | _`r paste0(subset(day_three, G1)$horse)`_ | _`r other_words`_ | `r length(c(subset(day_three, G1)$horse, other_words))`
+Four | _`r paste0(subset(day_four, G1)$horse)`_ | _`r other_words`_ | `r length(c(subset(day_four, G1)$horse, other_words))`
