@@ -121,7 +121,7 @@ img {
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Preparation <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="collection.html">Collection</a></li>
+						<li><a href="collection.html">Collecting</a></li>
 						<li><a href="cleaning.html">Cleaning</a></li>
 						<li><a href="classifying.html">Classifying</a></li>
 					</ul>
@@ -129,7 +129,7 @@ img {
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Race Days <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class="disabled"><a href="#">Overview</a></li>
+						<li><a href="daily_overview.html">Overview</a></li>
 						<li class="divider"></li>
 						<li class="disabled"><a href="#">Day One</a></li>
 						<li class="disabled"><a href="#">Day Two</a></li>
@@ -137,7 +137,7 @@ img {
 						<li class="disabled"><a href="#">Day Four</a></li>
 					</ul>
 				</li>
-				<li class="dropdown">
+				<!-- <li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Championship Races <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class="disabled"><a href="#">Supreme</a></li>
@@ -147,7 +147,7 @@ img {
 						<li class="disabled"><a href="#">RSA</a></li>
 						<li class="disabled"><a href="#">Gold Cup</a></li>
 					</ul>
-				</li>
+				</li> -->
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="useful_links.html">Useful Links</a></li>
@@ -163,6 +163,8 @@ img {
 </div>
 
 
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://durtal.github.io/cheltenham-festival-2015-twitter/classifying.html" data-text="Cheltenham Festival 2015 Twitter Analysis, 'Classifying' tweets" data-via="UTVilla" data-related="_RcappeR" data-hashtags="rstats,CheltenhamFestival">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 <p>Once the tweets have been cleaned (see <a href="cleaning.html">here</a>), we need to establish whether they “belong” to the festival. During the process of cleaning, each tweet was parsed looking for runners at the festival, and these runners names were then concatenated, so “hurricane fly” becomes “hurricanefly”, this allows the elimination of tweets that mention the two words “hurricane” and “fly” but not in the correct order that would indicate that the tweet was potentially about the Festival and the horse Hurricane Fly.</p>
 <p>The <a href="https://github.com/durtal/cheltenham-festival-2015-twitter/blob/gh-pages/R/functions.R#L66-L83"><code>findtweets</code></a> function searches a tweet for any number of terms, returning a logical <code>TRUE</code> if a term appears, and a <code>FALSE</code> if no term appears. As an example, we’ll use the same 6 tweets seen in the cleaning section.</p>
 <pre><code>## [1] &quot;think faugheen has it personally&quot;                                                                                        

@@ -2,6 +2,9 @@
 title: "Intro"
 ---
 
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://durtal.github.io/cheltenham-festival-2015-twitter/index.html" data-text="Cheltenham Festival 2015 Twitter Analysis, Intro" data-via="UTVilla" data-related="_RcappeR" data-hashtags="rstats,CheltenhamFestival">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
 The Cheltenham Festival dominates the National Hunt season, with the 4 day Festival often being discussed long in advance.  Twitter is a platform on which fans, pundits, punters, trainers, jockeys, gamblers can interact and debate about the horse racing.  For this reason, I wanted to collect tweets pertaining to the Cheltenham Festival.
 
 This is the second year I have done this, the first was last year (2014), and I wrote up a few views on my old wordpress blog, find links [here](https://protractedcontemplation.wordpress.com/2014/05/01/cheltenham-festival-twitter-crowd-part-one-2/) and [here](https://protractedcontemplation.wordpress.com/2014/05/02/cheltenham-festival-twitter-crowd-part-two/).  
