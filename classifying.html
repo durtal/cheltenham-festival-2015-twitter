@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title>classifying</title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/united.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: #FCFCFC;
+	text-align: justify;
+}
+@media (max-width: 979px) {
+	body {
+		padding-top: 0;
+	}
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+@media (min-width: 980px) {
+	.section h2 {
+		padding-top: 52px;
+		margin-top: -52px;
+	}
+	.section h3 {
+		padding-top: 52px;
+		margin-top: -52px;
+	}
+}
+p {
+	font-size: 13px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+	color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+	margin-top: 45px;
+}
+
+</style>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #0000ff; }
+code > span.ch { color: #008080; }
+code > span.st { color: #008080; }
+code > span.co { color: #008000; }
+code > span.ot { color: #ff4000; }
+code > span.al { color: #ff0000; }
+code > span.er { font-weight: bold; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<h1>Cheltenham Festival 2015 - Twitter Analysis</h1>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="http://durtal.github.io/">durtal.github.io</a>
+		</div>
+
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li><a href="index.html">Intro</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Preparation <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="collection.html">Collection</a></li>
+						<li><a href="cleaning.html">Cleaning</a></li>
+						<li><a href="classifying.html">Classifying</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Race Days <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li class="disabled"><a href="#">Overview</a></li>
+						<li class="divider"></li>
+						<li class="disabled"><a href="#">Day One</a></li>
+						<li class="disabled"><a href="#">Day Two</a></li>
+						<li class="disabled"><a href="#">Day Three</a></li>
+						<li class="disabled"><a href="#">Day Four</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Championship Races <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li class="disabled"><a href="#">Supreme</a></li>
+						<li class="disabled"><a href="#">Arkle</a></li>
+						<li class="disabled"><a href="#">Champion Hurdle</a></li>
+						<li class="disabled"><a href="#">Champion Chase</a></li>
+						<li class="disabled"><a href="#">RSA</a></li>
+						<li class="disabled"><a href="#">Gold Cup</a></li>
+					</ul>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="useful_links.html">Useful Links</a></li>
+				<li><a href="https://github.com/durtal/cheltenham-festival-2015-twitter"><i class="fa fa-github fa-lg"></i>
+				</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<div id="header">
+<h1 class="title">classifying</h1>
+</div>
+
+
+<p>Once the tweets have been cleaned (see <a href="cleaning.html">here</a>), we need to establish whether they “belong” to the festival. During the process of cleaning, each tweet was parsed looking for runners at the festival, and these runners names were then concatenated, so “hurricane fly” becomes “hurricanefly”, this allows the elimination of tweets that mention the two words “hurricane” and “fly” but not in the correct order that would indicate that the tweet was potentially about the Festival and the horse Hurricane Fly.</p>
+<p>The <a href="https://github.com/durtal/cheltenham-festival-2015-twitter/blob/gh-pages/R/functions.R#L66-L83"><code>findtweets</code></a> function searches a tweet for any number of terms, returning a logical <code>TRUE</code> if a term appears, and a <code>FALSE</code> if no term appears. As an example, we’ll use the same 6 tweets seen in the cleaning section.</p>
+<pre><code>## [1] &quot;think faugheen has it personally&quot;                                                                                        
+## [2] &quot;no point backing douvan in the opener when you get your money back if ya bet loses with billy hills&quot;                     
+## [3] &quot;rt horseandhound denman and kauto star among former stars to parade at cheltenham festival today&quot;                        
+## [4] &quot;p e w yankee for fun odds shaneshill odds clarcam odds hurricanefly odds corgy odds gt looooooongshot cheltenhamfestival&quot;
+## [5] &quot;rt boylesports one day left rt amp answer this cheltfest question to win a free bet enter here gt&quot;                       
+## [6] &quot;ruby walsh wager have the huge odds from odds ruby walsh to win any race at cheltenham&quot;</code></pre>
+<p>Two of the horses that were ‘tracked’ were Hurricane Fly and Douvan, they both feature in the tweets above, below shows the use of <code>findtweets</code>:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">findtweets</span>(<span class="dt">tweets =</span> eg_tweets, <span class="dt">searchfor =</span> <span class="kw">c</span>(<span class="st">&quot;Douvan&quot;</span>, <span class="st">&quot;Hurricane Fly&quot;</span>))</code></pre>
+<pre><code>## [1] FALSE  TRUE FALSE  TRUE FALSE FALSE</code></pre>
+<pre><code>## [1] &quot;no point backing douvan in the opener when you get your money back if ya bet loses with billy hills&quot;                     
+## [2] &quot;p e w yankee for fun odds shaneshill odds clarcam odds hurricanefly odds corgy odds gt looooooongshot cheltenhamfestival&quot;</code></pre>
+<p>Using the <a href="http://durtal.github.io/cheltenham-festival-2015-twitter/data/initial_search.txt">terms</a> that were ‘tracked’ in the searchfor parameter produces a logical vector that can be used to subset tweets, isolating those that do not contain one of the phrases initially tracked. So a tweet containing “hurricane fly” in that order is included in the subset, while a tweet containing “fly hurricane” will be removed. The plot below shows the number of tweets collected on each day, and the number of tweets that remained after the step above was produced. Roughly 25k tweets were removed over the four days.</p>
+<p><img src="images/initial_classification.jpeg" alt="image" /></p>
+<p>The <code>findtweets</code> function can also count the number of horses/phrases that appear in each tweet, the more horses/phrases that appear in a tweet, the more confident we can be that the tweet is Festival related. We can add a racing lexicon to the terms we ‘tracked’, this lexicon can be found <a href="https://github.com/durtal/cheltenham-festival-2015-twitter/blob/gh-pages/data/racing_lexicon.txt">here</a>, also added to the lexicon are the other runners at the Festival, resulting in a lexicon of about 700 horses, gambling and other racing terms. The plot below shows the distribution of the number of terms in the lexicon mentioned in each tweet.</p>
+<p><img src="images/distribution%20of%20terms.jpeg" alt="image" /></p>
+<p>So there are a few tweets with 15 terms in a tweet, these tweets we can be confident that they are Festival related, if you follow any racing fans then you can perhaps guess what one of these tweets looks like:</p>
+<p><strong>“odds douvan bentilimarew odds undesceaux clarcam ew oddsthe druids nephew lostlegendew odds jezki odds anniepower nap pollypeachum ew cheltfest”</strong></p>
+<p>Those tweets with just one term mentioned, around 30k tweets, we can be less confident about.</p>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

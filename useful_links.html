@@ -24,6 +24,7 @@ body {
 	padding-top: 20px;
 	padding-bottom: 20px;
 	background-color: #FCFCFC;
+	text-align: justify;
 }
 @media (max-width: 979px) {
 	body {
@@ -96,7 +97,14 @@ img {
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li><a href="index.html">Intro</a></li>
-				<li><a href="cleaning.html">Cleaning</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Preparation <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="collection.html">Collection</a></li>
+						<li><a href="cleaning.html">Cleaning</a></li>
+						<li><a href="classifying.html">Classifying</a></li>
+					</ul>
+				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Race Days <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
@@ -147,12 +155,23 @@ img {
 <li><a href="https://github.com/hadley/rvest">rvest</a> - web scraping</li>
 </ul></li>
 <li><a href="http://rmarkdown.rstudio.com/">rmarkdown</a> - used to build this site!</li>
+<li><a href="https://github.com/durtal/RcappeR">RcappeR</a> - used for the custom ggplot2 theme</li>
+<li><a href="https://github.com/karthik/wesanderson">wesanderson</a> - used for nice palettes</li>
 </ul>
 </div>
 <div id="blogs" class="section level3">
 <h3>Blogs</h3>
 <ul>
 <li><a href="http://pablobarbera.com/blog/archives/1.html">streamR intro</a> by <a href="https://twitter.com/p_barbera">Pablo Barbera</a></li>
+<li><a href="https://jeffreybreen.wordpress.com/2011/07/04/twitter-text-mining-r-slides/">Sentiment Analysis</a> by Jeffrey Breen</li>
+<li><a href="http://davetang.org/muse/2013/04/06/using-the-r_twitter-package/">ROAuth and twitteR</a> - accessing Twitter’s API</li>
+<li><a href="http://nerdsrule.co/2012/10/08/presidential-candidate-sentiment-analysis/">Presidential Sentiment Analysis</a></li>
+<li><p><a href="https://gastonsanchez.wordpress.com/2013/09/22/handling-and-processing-strings-in-r/">Handling and Processing Strings</a> by Gaston Sanchez</p></li>
+<li>My look at the 2014 Cheltenham Festival
+<ul>
+<li><a href="https://protractedcontemplation.wordpress.com/2014/05/01/cheltenham-festival-twitter-crowd-part-one-2/">part 1</a></li>
+<li><a href="https://protractedcontemplation.wordpress.com/2014/05/02/cheltenham-festival-twitter-crowd-part-two/">part 2</a></li>
+</ul></li>
 </ul>
 </div>
 <div id="r-learning-resources" class="section level3">

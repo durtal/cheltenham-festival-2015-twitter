@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title>cleaning</title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/united.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: #FCFCFC;
+	text-align: justify;
+}
+@media (max-width: 979px) {
+	body {
+		padding-top: 0;
+	}
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+@media (min-width: 980px) {
+	.section h2 {
+		padding-top: 52px;
+		margin-top: -52px;
+	}
+	.section h3 {
+		padding-top: 52px;
+		margin-top: -52px;
+	}
+}
+p {
+	font-size: 13px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+	color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+	margin-top: 45px;
+}
+
+</style>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #0000ff; }
+code > span.ch { color: #008080; }
+code > span.st { color: #008080; }
+code > span.co { color: #008000; }
+code > span.ot { color: #ff4000; }
+code > span.al { color: #ff0000; }
+code > span.er { font-weight: bold; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<h1>Cheltenham Festival 2015 - Twitter Analysis</h1>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="http://durtal.github.io/">durtal.github.io</a>
+		</div>
+
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li><a href="index.html">Intro</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Preparation <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="collection.html">Collection</a></li>
+						<li><a href="cleaning.html">Cleaning</a></li>
+						<li><a href="classifying.html">Classifying</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Race Days <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li class="disabled"><a href="#">Overview</a></li>
+						<li class="divider"></li>
+						<li class="disabled"><a href="#">Day One</a></li>
+						<li class="disabled"><a href="#">Day Two</a></li>
+						<li class="disabled"><a href="#">Day Three</a></li>
+						<li class="disabled"><a href="#">Day Four</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Championship Races <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li class="disabled"><a href="#">Supreme</a></li>
+						<li class="disabled"><a href="#">Arkle</a></li>
+						<li class="disabled"><a href="#">Champion Hurdle</a></li>
+						<li class="disabled"><a href="#">Champion Chase</a></li>
+						<li class="disabled"><a href="#">RSA</a></li>
+						<li class="disabled"><a href="#">Gold Cup</a></li>
+					</ul>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="useful_links.html">Useful Links</a></li>
+				<li><a href="https://github.com/durtal/cheltenham-festival-2015-twitter"><i class="fa fa-github fa-lg"></i>
+				</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<div id="header">
+<h1 class="title">cleaning</h1>
+</div>
+
+
+<p>Due to the number of tweets this rmarkdown document will only serve as an example of the cleaning and preparation carried out. The actual work has been performed once, resulting in a workspace of clean twitter data, the R script found <a href="https://github.com/durtal/cheltenham-festival-2015-twitter/blob/gh-pages/R/cleaning.R">here</a> carries out the cleaning work, it includes comments, the clean workspace is in the data folder in the gh-pages branch, called <a href="https://github.com/durtal/cheltenham-festival-2015-twitter/tree/gh-pages/data">clean_tweets.RData</a>.</p>
+<div id="tweets" class="section level3">
+<h3>tweets</h3>
+<p>To get an idea of the <em>dirty</em> tweets, a few examples can be seen below:</p>
+<pre><code>## [1] &quot;Think Faugheen has it personally &lt;ed&gt;&lt;U+00A0&gt;&lt;U+00BD&gt;&lt;ed&gt;&lt;U+00B1&gt;&lt;U+008F&gt;&quot;                                                                                              
+## [2] &quot;No point backing Douvan in the opener when you get your money back if ya bet loses with billy hills!&quot;                                                                   
+## [3] &quot;RT @horseandhound: Denman and Kauto Star among former stars to parade at Cheltenham Festival today http://t.co/lP7qIrPmoV http://t.co/yyoJS…&quot;                           
+## [4] &quot;20p e/w Yankee for fun\n1:30 Shaneshill\n2:05 Clarcam\n3:20 Hurricane Fly \n4:40 Corgy\n£4.40 &amp;gt; £8413 \n#LooooooongShot\n#CheltenhamFestival&quot;                        
+## [5] &quot;RT @BoyleSports: ONE DAY LEFT! RT &amp;amp; answer this #CheltFest question to #win a #free €/£500 bet! Enter here &amp;gt; http://t.co/BpaX6UTPVk http://…&quot;                    
+## [6] &quot;&lt;ed&gt;&lt;U+00A0&gt;&lt;U+00BC&gt;&lt;ed&gt;&lt;U+00BF&gt;&lt;U+0087&gt;RUBY WALSH WAGER&lt;ed&gt;&lt;U+00A0&gt;&lt;U+00BC&gt;&lt;ed&gt;&lt;U+00BF&gt;&lt;U+0087&gt; Have the HUGE 5/1(From 1/20) RUBY WALSH To Win ANY Race At Cheltenham&lt;U+27A1&gt; http://t.co/4pFaUYuRQ8 http://t.co/4ebIBcSIor&quot;</code></pre>
+<p>We can see that the tweets require some cleaning, thankfully I can use a function I wrote when looking at tweets from last year. This function, called <a href="https://github.com/durtal/cheltenham-festival-2015-twitter/blob/gh-pages/R/functions.R#L14-L56"><code>tweet_cleaner</code></a> removes emoticons/unrecognised characters, removes control characters, removes links, removes digits, removes spaces from start/end and removes double spaces. It also provides functionality to perform some tasks specific for these tweets. It has the following params:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(tweet_cleaner)</code></pre>
+<pre><code>## function (tweets, concat_terms = NULL, rename_odds = FALSE, rm_punct = FALSE) 
+## NULL</code></pre>
+<p>The <code>concat_terms</code> parameter will look for specific mentions of phrases in the tweets and concatenate them, so “hello birdy” would look for that phrase in tweets using the regex “hello ?birdy”, and convert it to “hellobirdy”. This is to help identify tweets that belong to the Festival, because Twitters streaming API would return tweets that mentioned “hello” and “birdy”, but not necessarily in the order desired, ie. tweets could be collected that said “hello little birdy”. And because we collected tweets mentioning horses, the <strong>order</strong> of the phrases is important if we are to analyse these tweets. This means a number of the collected tweets are unlikely to be related to the Festival. The <code>rename_odds</code> parameter will convert odds such as 3/1, 20/1, 2-1, 3.75, to the word “odds”. Finally, the <code>rm_punct</code> parameter removes punctuation.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tweet_cleaner</span>(<span class="dt">tweets =</span> eg_tweets, <span class="dt">rename_odds =</span> <span class="ot">TRUE</span>, <span class="dt">rm_punct =</span> <span class="ot">TRUE</span>)</code></pre>
+<pre><code>## [1] &quot;think faugheen has it personally&quot;                                                                                         
+## [2] &quot;no point backing douvan in the opener when you get your money back if ya bet loses with billy hills&quot;                      
+## [3] &quot;rt horseandhound denman and kauto star among former stars to parade at cheltenham festival today&quot;                         
+## [4] &quot;p e w yankee for fun odds shaneshill odds clarcam odds hurricane fly odds corgy odds gt looooooongshot cheltenhamfestival&quot;
+## [5] &quot;rt boylesports one day left rt amp answer this cheltfest question to win a free bet enter here gt&quot;                        
+## [6] &quot;ruby walsh wager have the huge odds from odds ruby walsh to win any race at cheltenham&quot;</code></pre>
+<p>Look at tweet number 4, it mentions a horse we wanted collecting, “hurricane fly”, by supplying the term “hurricane fly” as the <code>concat_terms</code> parameter, <code>tweet_cleaner</code> will locate the term/horse and concatenate. Helping identify a tweet that mentions the horse, compared to a tweet that happened to include the words “hurricane” and “fly”.</p>
+<pre class="sourceCode r"><code class="sourceCode r">(eg_tweets &lt;-<span class="st"> </span><span class="kw">tweet_cleaner</span>(<span class="dt">tweets =</span> eg_tweets, <span class="dt">concat_terms =</span> <span class="st">&quot;hurricane fly&quot;</span>, <span class="dt">rename_odds =</span> <span class="ot">TRUE</span>, <span class="dt">rm_punct =</span> <span class="ot">TRUE</span>))</code></pre>
+<pre><code>## [1] &quot;think faugheen has it personally&quot;                                                                                        
+## [2] &quot;no point backing douvan in the opener when you get your money back if ya bet loses with billy hills&quot;                     
+## [3] &quot;rt horseandhound denman and kauto star among former stars to parade at cheltenham festival today&quot;                        
+## [4] &quot;p e w yankee for fun odds shaneshill odds clarcam odds hurricanefly odds corgy odds gt looooooongshot cheltenhamfestival&quot;
+## [5] &quot;rt boylesports one day left rt amp answer this cheltfest question to win a free bet enter here gt&quot;                       
+## [6] &quot;ruby walsh wager have the huge odds from odds ruby walsh to win any race at cheltenham&quot;</code></pre>
+<p><code>concat_terms</code> can take a vector of terms, so these will be the ~500 horses that ran in any of the races over the four festival days.</p>
+</div>
+<div id="classifying" class="section level3">
+<h3>classifying</h3>
+<p>Once the tweets have been cleaned, we need to establish whether they were “belong” to the festival, as mentioned, the concatenation of horses names helps isolate tweets that were mistakenly collected. A <code>findtweets</code> function searches a tweet for any number of terms, returning a logical <code>TRUE</code> if a term appears, and a false if no term appears. These are the same tweets seen above:</p>
+<pre><code>## [1] &quot;think faugheen has it personally&quot;                                                                                        
+## [2] &quot;no point backing douvan in the opener when you get your money back if ya bet loses with billy hills&quot;                     
+## [3] &quot;rt horseandhound denman and kauto star among former stars to parade at cheltenham festival today&quot;                        
+## [4] &quot;p e w yankee for fun odds shaneshill odds clarcam odds hurricanefly odds corgy odds gt looooooongshot cheltenhamfestival&quot;
+## [5] &quot;rt boylesports one day left rt amp answer this cheltfest question to win a free bet enter here gt&quot;                       
+## [6] &quot;ruby walsh wager have the huge odds from odds ruby walsh to win any race at cheltenham&quot;</code></pre>
+<p>We will search for two terms, two horses running on the opening day, “Douvan” and “Hurricane Fly”, returning a logical vector:</p>
+<pre class="sourceCode r"><code class="sourceCode r">(ind &lt;-<span class="st"> </span><span class="kw">findtweets</span>(<span class="dt">tweets =</span> eg_tweets, <span class="dt">searchfor =</span> <span class="kw">c</span>(<span class="st">&quot;Douvan&quot;</span>, <span class="st">&quot;Hurricane Fly&quot;</span>)))</code></pre>
+<pre><code>## [1] FALSE  TRUE FALSE  TRUE FALSE FALSE</code></pre>
+<p>This vector is then used to subset tweets. Overall ~25k tweets were mistakenly collected, so a little under 10% of tweets.</p>
+</div>
+<div id="times" class="section level3">
+<h3>times</h3>
+<p>The <code>created_at</code> variable included in a tweets metadata also requires some cleaning, it comes stored as a string, eg Tue Mar 10 10:00:59 +0000 2015, to plot timelines more easily these need converting.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">strptime</span>(day_one_tweets$created_at[<span class="dv">1</span>], <span class="st">&quot;%a %b %d %H:%M:%S %z %Y&quot;</span>)</code></pre>
+<pre><code>## [1] &quot;2015-03-10 10:00:59&quot;</code></pre>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

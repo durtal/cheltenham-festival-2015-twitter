@@ -24,6 +24,7 @@ body {
 	padding-top: 20px;
 	padding-bottom: 20px;
 	background-color: #FCFCFC;
+	text-align: justify;
 }
 @media (max-width: 979px) {
 	body {
@@ -96,7 +97,14 @@ img {
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li><a href="index.html">Intro</a></li>
-				<li><a href="cleaning.html">Cleaning</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Preparation <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="collection.html">Collection</a></li>
+						<li><a href="cleaning.html">Cleaning</a></li>
+						<li><a href="classifying.html">Classifying</a></li>
+					</ul>
+				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Race Days <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
@@ -138,46 +146,7 @@ img {
 <p>This is the second year I have done this, the first was last year (2014), and I wrote up a few views on my old wordpress blog, find links <a href="https://protractedcontemplation.wordpress.com/2014/05/01/cheltenham-festival-twitter-crowd-part-one-2/">here</a> and <a href="https://protractedcontemplation.wordpress.com/2014/05/02/cheltenham-festival-twitter-crowd-part-two/">here</a>.</p>
 <p>This year, having learnt more about R, I am using it and <a href="http://rmarkdown.rstudio.com/">rmarkdown</a> to build this dedicated site, for people to peruse at their leisure. You will find a variety of articles include analysis of twitter per race day; overviews comparing the four days; specific Championship races; comparisons of Championship winners.</p>
 <p>Code and data (tweets, etc) is available on github, find it <a href="https://github.com/durtal/cheltenham-festival-2015-twitter">here</a>, which would allow others to perhaps contribute posts/analysis to this site. Don’t hesitate to ask me any questions on twitter, either <a href="https://twitter.com/UTVilla">UTVilla</a> or <a href="https://twitter.com/_RcappeR">_RcappeR</a>.</p>
-<div id="tweets" class="section level3">
-<h3>Tweets</h3>
-<p>Tweets were collected using the <a href="https://github.com/pablobarbera/streamR">streamR</a> R package created by <a href="https://twitter.com/p_barbera">Pablo Barbera</a>. The runners in each of the Championship races on each day were ‘tracked’ via Twitter’s streaming API, and tweets mentioning one (or more) of the runners were collected. A few other words were also used, these included “cheltenham”, “cheltfest” and a number of the larger bookmakers (based on their twitter usernames), a full list can be seen in the table below, it includes the number of terms that were used:</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Day</th>
-<th align="left">horses ‘tracked’</th>
-<th align="left">other</th>
-<th align="left">terms</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">One</td>
-<td align="left"><em>Alvisio Ville, Bentelimar, Douvan, Jollyallan, L´Ami Serge, Qewy, Seedling, Shaneshill, Sizing John, Some Plan, Tell Us More, Velvet Maker, Clarcam, Court Minstrel, Dunraven Storm, God´s Own, Josses Hill, Sail By The Sea, Sgt Reckless, Smashing, Three Kingdoms, Un De Sceaux, Vibrato Valtat, Arctic Fire, Bertimont, Faugheen, Hurricane Fly, Jezki, Kitten Rock, The New One, Vaniteux, Annie Power, Bitofapuzzle, Carole´s Spirit, Centasia, Dark Spirit, Emily Gray, Glens Melody, Hidden Identity, L´Unique, Mischievous Milly, Pass The Time, Polly Peachum, Sureness, Swing Bowler, The Govaness, The Pirate´s Queen</em></td>
-<td align="left"><em>cheltenham, cheltfest, ladbrokes, paddypower, willhillbet, betvictor, coral, betfair</em></td>
-<td align="left">55</td>
-</tr>
-<tr class="even">
-<td align="left">Two</td>
-<td align="left"><em>Anteros, Beast Of Burden, Nichols Canyon, Ordo Ab Chao, Outlander, Parlour Games, Snow Falcon, Vyta Du Roc, Warrantor, Windsor Park, Apache Jack, Don Poli, If In Doubt, Kings Palace, Southfield Theatre, The Ould Lad, The Young Master, Wounded Warrior, Adriana Des Mottes, Champagne Fever, Clarcam, Dodging Bullets, Mr Mole, Savello, Simply Ned, Sire De Grugy, Sizing Europe, Somersby, Special Tiara, Sprinter Sacre</em></td>
-<td align="left"><em>cheltenham, cheltfest, ladbrokes, paddypower, willhillbet, betvictor, coral, betfair</em></td>
-<td align="left">38</td>
-</tr>
-<tr class="odd">
-<td align="left">Three</td>
-<td align="left"><em>Apache Stronghold, Colour Squadron, Irish Saint, Ptit Zig, Splash Of Ginge, Tango De Juilley, The Tullow Tank, Valseur Lido, Vautour, Balder Succes, Ballycasey, Don Cossack, Double Ross, Eduard, Foxrock, Hidden Cyclone, Johns Spirit, Taquin Du Seuil, Third Intention, Uxizandre, Wishfull Thinking, Wonderful Charm, Ma Filleule, Abbyssial, At Fishers Cross, Aubusson, Blue Fashion, Cole Harden, Dedigout, Jetson, Lieutenant Colonel, Monksland, Reve De Sivola, Saphir Du Rheu, Seeyouatmidnight, Tiger Roll, Un Temps Pour Tout, Whisper, Zaidpour, Zarkandar</em></td>
-<td align="left"><em>cheltenham, cheltfest, ladbrokes, paddypower, willhillbet, betvictor, coral, betfair</em></td>
-<td align="left">48</td>
-</tr>
-<tr class="even">
-<td align="left">Four</td>
-<td align="left"><em>Baraka De Thaix, Beltor, Devilment, Dicosimo, Hargam, Kalkir, Karezak, Matorico, Officer Drivel, Old Guard, Pain Au Chocolat, Peace And Co, Prairie Town, Stars Over The Sea, Take A Break, Top Notch, Petite Parisienne, Arbre De Vie, Avant Tout, Black Hercules, Blaklion, Caracci Apache, Carningli, Definitly Red, Fletchers Flyer, Kylemore Lough, Martello Tower, Measureofmydreams, Milsean, Native River, No More Heroes, Out Sam, Shanroe Santos, Shantou Bob, Tea For Two, Thomas Brown, Value At Risk, Bobs Worth, Boston Bob, Carlingford Lough, Coneygree, Djakadam, Don Cossack, Holywell, Home Farm, Houblon Des Obeaux, Lord Windermere, Many Clouds, On His Own, River Choice, Road To Riches, Sam Winner, Silviniaco Conti, Smad Place, The Giant Bolster</em></td>
-<td align="left"><em>cheltenham, cheltfest, ladbrokes, paddypower, willhillbet, betvictor, coral, betfair</em></td>
-<td align="left">63</td>
-</tr>
-</tbody>
-</table>
-</div>
+<p>There are three parts to the site, a section that looks at the preparation, from collecting tweets to cleaning the data ahead of analysis. A section that looks at the four individual days and overviews of that days races. The final section looks at the individual races. The preparation section contains the most code as cleaning and collection of tweets is explained, while other sections is primarily content, with plenty of plots.</p>
 
 
 </div>

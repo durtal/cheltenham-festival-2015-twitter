@@ -1,0 +1,49 @@
+---
+title: "cleaning"
+---
+
+```{r echo=FALSE}
+# load data
+load("data/day_one.RData")
+
+# source functions
+source("R/functions.R")
+```
+
+Due to the number of tweets this rmarkdown document will only serve as an example of the cleaning and preparation carried out.  The actual work has been performed once, resulting in a workspace of clean twitter data, the R script found [here](https://github.com/durtal/cheltenham-festival-2015-twitter/blob/gh-pages/R/cleaning.R) carries out the cleaning work, it includes comments, the clean workspace is in the data folder in the gh-pages branch, called [clean_tweets.RData](https://github.com/durtal/cheltenham-festival-2015-twitter/tree/gh-pages/data).
+
+### tweets
+
+To get an idea of the _dirty_ tweets, a few examples can be seen below:
+
+```{r echo=FALSE}
+(eg_tweets <- head(day_one_tweets$text))
+```
+
+We can see that the tweets require some cleaning, thankfully I can use a function I wrote when looking at tweets from last year.  This function, called [`tweet_cleaner`](https://github.com/durtal/cheltenham-festival-2015-twitter/blob/gh-pages/R/functions.R#L14-L56) removes emoticons/unrecognised characters, removes control characters, removes links, removes digits, removes spaces from start/end and removes double spaces.  It also provides functionality to perform some tasks specific for these tweets.  It has the following params:
+
+```{r}
+args(tweet_cleaner)
+```
+
+The `concat_terms` parameter will look for specific mentions of phrases in the tweets and concatenate them, so "hello birdy" would look for that phrase in tweets using the regex "hello ?birdy", and convert it to "hellobirdy".  This is to help identify tweets that belong to the Festival, because Twitters streaming API would return tweets that mentioned "hello" and "birdy", but not necessarily in the order desired, ie. tweets could be collected that said "hello little birdy".  And because we collected tweets mentioning horses, the **order** of the phrases is important if we are to analyse these tweets.  This means a number of the collected tweets are unlikely to be related to the Festival.  The `rename_odds` parameter will convert odds such as 3/1, 20/1, 2-1, 3.75, to the word "odds".  Finally, the `rm_punct` parameter removes punctuation.
+
+```{r}
+tweet_cleaner(tweets = eg_tweets, rename_odds = TRUE, rm_punct = TRUE)
+```
+
+Look at tweet number 4, it mentions a horse we wanted collecting, "hurricane fly", by supplying the term "hurricane fly" as the `concat_terms` parameter, `tweet_cleaner` will locate the term/horse and concatenate.  Helping identify a tweet that mentions the horse, compared to a tweet that happened to include the words "hurricane" and "fly".
+
+```{r}
+(eg_tweets <- tweet_cleaner(tweets = eg_tweets, concat_terms = "hurricane fly", rename_odds = TRUE, rm_punct = TRUE))
+```
+
+`concat_terms` can take a vector of terms, so these will be the ~500 horses that ran in any of the races over the four festival days.
+
+### times
+
+The `created_at` variable included in a tweets metadata also requires some cleaning, it comes stored as a string, eg `r day_one_tweets$created_at[1]`, to plot timelines more easily these need converting.
+
+```{r}
+strptime(day_one_tweets$created_at[1], "%a %b %d %H:%M:%S %z %Y")
+```
