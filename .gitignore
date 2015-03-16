@@ -7,3 +7,4 @@ R/*.Rout
 data/*.json
 .RData
 .Rhistory
+**_cache/
