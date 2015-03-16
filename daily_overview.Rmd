@@ -1,0 +1,174 @@
+---
+title: "overview"
+---
+
+```{r echo=FALSE, warning=FALSE, message=FALSE, cache=TRUE}
+# load data
+load("data/clean_tweets.RData")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# load libraries
+library(dplyr)
+library(ggplot2)
+library(reshape)
+library(RcappeR)
+library(wesanderson)
+
+pal <- wes_palette(name = "Darjeeling")[c(1,2,4,5)]
+```
+
+Over the four Festival days, tweets were collected from 10am until 5pm (with the exception of Wednesday, day two, which was cut short), resulting in the collection of **`r length(racing$text)`** tweets.  For details about how the tweets were collected see [here](collection.html), for cleaning tweets see [here](cleaning.html), and for 'classifying' tweets that "belong" to the Festival see [here](classifying.html).
+
+Below are summary plots showing the number of tweets sent on each Festival day and the number of unique twitter users.  Day One saw the most tweets sent, and unsurprisingly it also had the most users.  Day 2 (Wednesday) had the fewest users, but despite collection of tweets ending prematurely, it had more tweets than Day 3.  Before counts increase on Day 4, the profile of fans engaging at the start and end of the Festival is the same as seen last year.  Part of this could be down to the number of horses being 'tracked' on twitter, Days 1 and 4 tracked more than the middle days (Day 2 only tracking 38 different horses, see the table [here](collection.html) for a full list and counts of horses collected).
+
+<div class="row">
+<div class="col-sm-6">
+```{r echo=FALSE}
+racing %>%
+    group_by(.id) %>%
+    summarise(n = n()) %>%
+    ggplot(aes(x = .id, y = n)) +
+        geom_bar(stat = "identity", fill = pal, alpha = .65, color = "#424242") +
+        theme_rcapper() +
+        labs(x = "Festival Day", y = "Count", title = "No. of tweets sent")
+```
+</div>
+<div class="col-sm-6">
+```{r echo=FALSE}
+racing %>%
+    group_by(.id) %>%
+    summarise(n = length(unique(user_id_str))) %>%
+    ggplot(aes(x = .id, y = n)) +
+    geom_bar(stat = "identity", fill = pal, alpha = .65, color = "#424242") +
+    theme_rcapper() +
+    labs(x = "Festival Day", y = "Count", title = "No. of users")
+```
+</div>
+</div>
+
+### tweet timelines
+
+Next is a look at the engagement of twitter users over time.  Below are tweet timelines across the four days, showing the number of tweets sent per minute.  For reference, the Championship races, from which the horses were 'tracked' on twitter, started at: Day 1 (13:30, 14:05, 15:20, 4:00); Day 2 (13:30, 14:05, 15:20); Day 3 (13:30, 14:40, 15:20); Day 4 (13:30, 14:40, 15:20).
+
+The large peaks typically come after a race has been completed.  The largest peak came after the opening race on Day 3 (start time 13:30), the JLT Novices Chase which was won by Vautour in impressive fashion, his win prompted over 1200 tweets being sent for a single minute shortly after the race was completed.  Day 1 provides the most post race reactions, with the Champion Hurdle (start time 15:20) coming close to the reaction of Vautour, with just shy of 1200 tweets sent for a single minute.  The reaction to the final race on Day 1 (start time 16:00) is also unsurprising if anyone watched that race.  Each individual day will have it's own summary analysis (eventually), for those curious.
+
+```{r echo=FALSE, fig.align='center', out.width="550px", out.height="375px"}
+racing %>%
+    ggplot(aes(x = created_at, fill = .id)) +
+    geom_bar(binwidth = 60) +
+    scale_fill_manual(values = pal, guide = FALSE) +
+    theme_rcapper() +
+    labs(x = "Time", y = "Count", title = "Cheltenham Festival Tweet Timelines (per minute)") +
+    facet_wrap(~.id, scales = "free_x")
+    
+```
+
+### tweets per championship race
+
+We can also look at the number of tweets that "belong" to each Championship race; when I say belong, I mean that a tweet mentions a runner from that race.  The plot below shows these counts.  The Cheltenham Gold Cup (Day 4, 2015-03-13 3:20), the final Grade 1 race of the Festival had the most tweets, with over 25,000, the second most tweeted about race was the Champion Hurdle (Day 1, 2015-03-10 3:20), closely followed by the Mares Hurdle (Day 4, 2015-03-10 4:00).  The Gold Cup and Champion Hurdle were 2 of the most tweeted about races from last year too, see [here](https://protractedcontemplation.files.wordpress.com/2014/04/part1-fig3.png).
+
+```{r echo=FALSE, cache=TRUE}
+allrunners$date_time <- paste(allrunners$date, allrunners$time)
+# create list of runners
+rnrs <- sapply(unique(subset(allrunners, G1)$date_time), function(x) {
+    subset(allrunners, date_time == x)$horse
+})
+
+# count number of tweets that mention one of runners from 13 championship races
+racecounts <- lapply(rnrs, function(x) length(findtweets(racing$text, x, counts = TRUE)))
+racecounts <- plyr::ldply(racecounts)
+names(racecounts) <- c("race", "count")
+racecounts$.id <- factor(rep(paste0("day", 1:4), times = c(4,3,3,3)))
+```
+
+```{r echo=FALSE, fig.align='center', out.width="550px", out.height="400px"}
+# plot counts per race
+ggplot(racecounts, aes(x = race, fill = .id, y = count)) +
+    geom_bar(stat="identity", alpha = .65, color = "#424242") +
+    theme_rcapper() +
+    scale_fill_manual(values = pal, guide = FALSE) +
+    theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1)) +
+    labs(x = "Race", y = "Count", title = "No. of tweets that belong* to each Race\n(*mention a runner)")
+```
+
+### cheltenham mentions
+
+```{r echo=FALSE, cache=TRUE}
+cheltenham <- findtweets(racing$text, "cheltenham")
+cheltenham <- racing[cheltenham, ]
+```
+
+<div class="row">
+<div class="col-sm-7">
+"Cheltenham" was one of the words tracked that wasn't a horse running at the Festival, and was mentioned in **`r length(cheltenham$text)`** tweets.  The number of cheltenham mentions across the four days is plotted to the right, Day 1 featured the most tweets.
+
+Below is a plot showing the timelines of "cheltenham" mentions.  A bit like last year, on Day 1, as the opening race of the Festival draws nearer there is a small increase in the number of "cheltenham" tweets.  It also looks like impressive winners of Festival races, prompt users to mention "cheltenham", Vautour on Day 3 for example.  The most mentions of "cheltenham" unsurprisingly coincided with the Cheltenham Gold Cup, run on Day 4 at 15:20.
+</div>
+<div class="col-sm-5">
+```{r echo=FALSE}
+ggplot(cheltenham) +
+    geom_bar(aes(x=.id, fill=.id), alpha=.65, color = "#424242") +
+    theme_rcapper() + 
+    scale_fill_manual(values = pal, guide=FALSE) +
+    labs(x="Festival Day", y="Count", title="Tweets mentioning 'cheltenham'")
+```
+</div>
+</div>
+
+
+```{r echo=FALSE, fig.align='center', out.width="550px", out.height="400px"}
+ggplot(cheltenham) +
+    geom_bar(aes(x=created_at, fill=.id), binwidth = 60) +
+    theme_rcapper() + 
+    scale_fill_manual(values = pal, guide=FALSE) +
+    labs(x="Festival Day", y="Count", title="Tweet timeline:\ntweets mentioning 'cheltenham'") +
+    facet_wrap(~.id, scales = "free_x")
+```
+
+We can also assess the sentiment of tweets mentioning "cheltenham" over time, seen in the plots below.  The average sentiment over 5minute intervals is plotted in the points, with a loess regression producing the smooth curve.  Interesting that sentiment over 3 of the days, Days 2, 3 and 4, remains quite positive throughout, with Day 4 the most positive of the four days.  However on Day 1, the sentiment of the twitter crowd, crashed around 16:00, anyone following the days action will no doubt be aware of the fall of Annie Power in the Mares Hurdle.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="550px", out.height="400px"}
+day1 <- cheltenham %>% filter(.id == "day1")
+times <- seq(min(day1$created_at), max(day1$created_at), by = 300)
+day1 <- day1 %>%
+    mutate(cuts = cut(created_at, breaks = times)) %>%
+    group_by(cuts) %>%
+    summarise(avg_senti = mean(senti_score)) %>%
+    mutate(cuts = as.POSIXct(as.character(cuts)), .id = "day1")
+
+day2 <- cheltenham %>% filter(.id == "day2")
+times <- seq(min(day2$created_at), max(day2$created_at), by = 300)
+day2 <- day2 %>%
+    mutate(cuts = cut(created_at, breaks = times)) %>%
+    group_by(cuts) %>%
+    summarise(avg_senti = mean(senti_score)) %>%
+    mutate(cuts = as.POSIXct(as.character(cuts)), .id = "day2")
+
+day3 <- cheltenham %>% filter(.id == "day3")
+times <- seq(min(day3$created_at), max(day3$created_at), by = 300)
+day3 <- day3 %>%
+    mutate(cuts = cut(created_at, breaks = times)) %>%
+    group_by(cuts) %>%
+    summarise(avg_senti = mean(senti_score)) %>%
+    mutate(cuts = as.POSIXct(as.character(cuts)), .id = "day3")
+
+day4 <- cheltenham %>% filter(.id == "day4")
+times <- seq(min(day4$created_at), max(day4$created_at), by = 300)
+day4 <- day4 %>%
+    mutate(cuts = cut(created_at, breaks = times)) %>%
+    group_by(cuts) %>%
+    summarise(avg_senti = mean(senti_score)) %>%
+    mutate(cuts = as.POSIXct(as.character(cuts)), .id = "day4")
+
+sentidays <- rbind(day1, day2, day3, day4)
+rm(day1, day2, day3, day4)
+
+sentidays %>% ggplot(aes(x = cuts, y = avg_senti, col = .id)) +
+    geom_point() +
+    geom_smooth(stat = "smooth") +
+    theme_rcapper() +
+    scale_color_manual(values = pal, guide = FALSE) +
+    labs(x = "Time", y = "Average Sentiment", title = "Sentiment over time for tweets\nmentioning 'cheltenham'") +
+    facet_wrap(~.id, scales = "free_x")
+```
