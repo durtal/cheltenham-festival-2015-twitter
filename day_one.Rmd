@@ -24,7 +24,7 @@ library(wesanderson)
 pal <- wes_palette(name = "Darjeeling")
 ```
 
-<a href="https://twitter.com/share" class="twitter-share-button" data-text="Cheltenham Festival 2015 Day One, Twitter Analysis" data-via="UTVilla" data-hashtags="rstats,CheltenhamFestival">Tweet</a>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://durtal.github.io/cheltenham-festival-2015-twitter/day_one.html" data-text="Cheltenham Festival 2015 Day One, Twitter Analysis" data-via="_RcappeR" data-related="_RcappeR" data-hashtags="rstats,CheltenhamFestival">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
 Over the course of the opening day of the 2015 Cheltenham Festival, **`r length(day_one$text)`** tweets were collected  They were collected if they mentioned any of the runners in the Championship Races (Grade 1s), or a number of other related words.  The opening day featured more tweets than the other three days, it likely attracts casual fans of the sport to tweet, while the more hardy/passionate fans will remain engaged across the four days.
@@ -80,7 +80,7 @@ The two plots below shows the number of tweets that mention a runner from each C
 ```{r echo=FALSE, out.width="550px", out.height="400px", fig.align='center'}
 ggplot(racecounts, aes(x = race, y = count, fill = race)) +
     geom_bar(stat = "identity", alpha = .65, color = "#424242") +
-    scale_fill_manual(values = pal[c(1,2,4,5)], guide = FALSE) + 
+    scale_fill_manual(values = pal[c(1,2,4,5)], guide = FALSE) +
     theme_rcapper() +
     labs(x = "Championship Race", y = "Count", title = "No. of tweets per Championship Race")
 ```
@@ -182,9 +182,9 @@ Also of interest is which horses were popular on twitter, is there any wisdom in
 <div class="col-md-6">
 ```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align='center'}
 champcountsbefore %>%
-    ggplot(aes(x = horse, y = prop)) + 
+    ggplot(aes(x = horse, y = prop)) +
         geom_bar(stat = "identity", alpha = .65, fill = wes_palette("Rushmore")[3], color = "#424242") +
-        theme_rcapper() + 
+        theme_rcapper() +
         scale_y_continuous(limits = c(0, 1)) +
         theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1)) +
         labs(x = "Horse", y = "% of tweets", title = "Champion Hurdle Runners\n% of mentions before race")
@@ -193,9 +193,9 @@ champcountsbefore %>%
 <div class="col-md-6">
 ```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align='center'}
 champcountsafter %>%
-    ggplot(aes(x = horse, y = prop)) + 
+    ggplot(aes(x = horse, y = prop)) +
         geom_bar(stat = "identity", alpha = .65, fill = wes_palette("Rushmore")[3], color = "#424242") +
-        theme_rcapper() + 
+        theme_rcapper() +
         scale_y_continuous(limits = c(0, 1)) +
         theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1)) +
         labs(x = "Horse", y = "% of tweets", title = "Champion Hurdle Runners\n% of mentions post race")
@@ -292,9 +292,9 @@ Also of interest is which horses were popular on twitter, is there any wisdom in
 <div class="col-md-6">
 ```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align='center'}
 marescountsbefore %>%
-    ggplot(aes(x = horse, y = prop)) + 
+    ggplot(aes(x = horse, y = prop)) +
         geom_bar(stat = "identity", alpha = .65, fill = wes_palette("Rushmore")[3], color = "#424242") +
-        theme_rcapper() + 
+        theme_rcapper() +
         scale_y_continuous(limits = c(0, 1)) +
         theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1)) +
         labs(x = "Horse", y = "% of tweets", title = "Mares Hurdle Runners\n% of mentions before race")
@@ -303,9 +303,9 @@ marescountsbefore %>%
 <div class="col-md-6">
 ```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align='center'}
 marescountsafter %>%
-    ggplot(aes(x = horse, y = prop)) + 
+    ggplot(aes(x = horse, y = prop)) +
         geom_bar(stat = "identity", alpha = .65, fill = wes_palette("Rushmore")[3], color = "#424242") +
-        theme_rcapper() + 
+        theme_rcapper() +
         scale_y_continuous(limits = c(0, 1)) +
         theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1)) +
         labs(x = "Horse", y = "% of tweets", title = "Mares Hurdle Runners\n% of mentions post race")
