@@ -1,0 +1,314 @@
+---
+title: "day one"
+---
+
+```{r echo=FALSE, cache=TRUE}
+# load data
+load("data/clean_tweets.RData")
+
+day_one <- subset(racing, .id == "day1")
+day_one_runners <- subset(allrunners, .id == "day1")
+day_one_runners$date_time <- paste(day_one_runners$date, day_one_runners$time)
+
+rm(allrunners, racing)
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# load libraries
+library(dplyr)
+library(ggplot2)
+library(reshape)
+library(RcappeR)
+library(wesanderson)
+
+pal <- wes_palette(name = "Darjeeling")
+```
+
+<a href="https://twitter.com/share" class="twitter-share-button" data-text="Cheltenham Festival 2015 Day One, Twitter Analysis" data-via="UTVilla" data-hashtags="rstats,CheltenhamFestival">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+Over the course of the opening day of the 2015 Cheltenham Festival, **`r length(day_one$text)`** tweets were collected  They were collected if they mentioned any of the runners in the Championship Races (Grade 1s), or a number of other related words.  The opening day featured more tweets than the other three days, it likely attracts casual fans of the sport to tweet, while the more hardy/passionate fans will remain engaged across the four days.
+
+The horses 'tracked' on day one, are shown in the table below:
+
+<sub>A small footnote, tracking some horses by name will undoubtedly collect tweets that were not about the Festival or the horse, an example of this is the horse Smashing, running in the Arkle.  The word smashing is very likely to appear in a tweet outside of racing, compared to a tweet that mentions Dunraven Storm (from the same race).  "Smashing" featured in `r length(findtweets(day_one$text, "Smashing", counts = TRUE))` tweets, a fair number of these were about ITV this morning and marvinhumes and rochellethesats "smashing" it.</sub>
+
+Day | Race | Time |Horses | n
+----|------|------|-------|---
+1 | Supreme Novices | 13:30 | _`r subset(day_one_runners, time == "1:30")$horse`_ | `r length(subset(day_one_runners, time == "1:30")$horse)`
+1 | Arkle | 14:05 | _`r subset(day_one_runners, time == "2:05")$horse`_ | `r length(subset(day_one_runners, time == "2:05")$horse)`
+1 | Champion Hurdle | 15:20 | _`r subset(day_one_runners, time == "3:20")$horse`_ | `r length(subset(day_one_runners, time == "3:20")$horse)`
+1 | Mares Hurdle | 16:00 | _`r subset(day_one_runners, time == "4:00")$horse`_ | `r length(subset(day_one_runners, time == "4:00")$horse)`
+
+### timeline
+
+The plot below shows the timeline from the opening day, included in the plot are four vertical lines charting the start times of the various races.  These races were the **Supreme Novices** (13:30), the **Arkle** (14:05), the **Champion Hurdle** (15:20) and the **Mares Hurdle** (16:00).  It becomes clearer that the peaks are post race reactions, but also interesting is the drop in the number of tweets sent between the race starting and the race being completed.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+# data frame of numeric times for adding vertical lines to timeline plot
+racetimes <- data.frame(date_time = as.numeric(as.POSIXct(c("2015-03-10 13:30", "2015-03-10 14:05","2015-03-10 15:20", "2015-03-10 16:00"))))
+ggplot(day_one, aes(x = created_at)) +
+    geom_bar(binwidth = 60, alpha = .65, fill = pal[1]) +
+    geom_vline(data = racetimes, aes(xintercept = date_time)) +
+    theme_rcapper() +
+    labs(x = "Time", y = "Count", title = "Cheltenham Festival Day 1\nTweet timeline")
+```
+
+```{r echo=FALSE, cache=TRUE}
+rnrs <- sapply(unique(subset(day_one_runners, G1)$date_time), function(x) subset(day_one_runners, date_time == x)$horse)
+racecounts <- lapply(rnrs, function(x) length(findtweets(day_one$text, x, counts = TRUE)))
+racecounts <- plyr::ldply(racecounts)
+names(racecounts) <- c("race", "count")
+racecounts$race <- c("Supreme", "Arkle", "Champion", "Mares")
+racecounts$race <- factor(racecounts$race, levels = unique(racecounts$race))
+
+rnrs <- as.list(subset(day_one_runners, G1)$horse)
+names(rnrs) <- subset(day_one_runners, G1)$horse
+runnercounts <- lapply(rnrs, function(x) length(findtweets(day_one$text, x, counts = TRUE)))
+runnercounts <- plyr::ldply(runnercounts)
+names(runnercounts) <- c("horse", "count")
+runnercounts <- runnercounts %>% arrange(desc(count)) %>%
+    mutate(horse = factor(horse, levels = horse))
+```
+
+### races and runners
+
+The two plots below shows the number of tweets that mention a runner from each Championship race, and the most mentioned horses.  The most tweeted about race was the Champion Hurdle, with `r racecounts$count[which(racecounts$race == "Champion")]` tweets, closely followed by the Mares Hurdle with `r racecounts$count[which(racecounts$race == "Mares")]`.  To the right
+
+<div class="row">
+<div class="col-md-6">
+```{r echo=FALSE, out.width="550px", out.height="400px", fig.align='center'}
+ggplot(racecounts, aes(x = race, y = count, fill = race)) +
+    geom_bar(stat = "identity", alpha = .65, color = "#424242") +
+    scale_fill_manual(values = pal[c(1,2,4,5)], guide = FALSE) + 
+    theme_rcapper() +
+    labs(x = "Championship Race", y = "Count", title = "No. of tweets per Championship Race")
+```
+</div>
+<div class="col-md-6">
+```{r echo=FALSE, out.width="550px", out.height="400px", fig.align='center'}
+runnercounts %>%
+    head(10) %>%
+    ggplot(aes(x = horse, y = count)) +
+        geom_bar(stat = "identity", fill = wes_palette("Rushmore")[3], alpha = .65, color = "#424242") +
+        theme_rcapper() +
+        theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1)) +
+        labs(x = "Horse", y = "Count", title = "No. of tweets per Horse")
+```
+</div>
+</div>
+
+I'll only look at two races from Day One, the Champion Hurdle and the Mares Hurdle (but if anyone wants to see other races looked at let me know and I'll try add them).
+
+### champion hurdle
+
+```{r echo=FALSE, cache=TRUE}
+champrunners <- subset(day_one_runners, time == "3:20")$horse
+ind <- findtweets(day_one$text, searchfor = champrunners)
+champion <- day_one[ind, ]
+
+champion$sent_before <- ifelse(champion$created_at <= as.POSIXct("2015-03-10 15:20"), TRUE, FALSE)
+```
+
+The Champion Hurdle featured a relatively small field compared to other Championship races, with just `r length(champrunners)` runners, won by the Willie Mullins trained Faugheen.  The plots below shows the number of tweets sent per minute that menioned one of the `r length(champrunners)` runners, and the sentiment of those same tweets over 10minute intervals.  Naturally the volume of tweets increase as the race is completed, also plotted in the sentiment plot is a loess curve, showing that sentiment takes quite a sharp upturn after the race is completed.
+
+<div class="row">
+<div class="col-md-6">
+```{r echo=FALSE, fig.align='center'}
+ggplot(champion, aes(x = created_at, fill = sent_before)) +
+    geom_bar(binwidth = 60) +
+    scale_fill_manual(values = pal[c(1,5)], guide = FALSE) +
+    theme_rcapper() +
+    labs(x = "Time", y = "Count", title = "Champion Hurdle:\ntweets sent before race (blue) and after (red)")
+```
+</div>
+<div class="col-md-6">
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+times <- seq(min(champion$created_at), max(champion$created_at), by = 600)
+champion_senti <- champion %>%
+    mutate(cuts = cut(created_at, breaks = times)) %>%
+    group_by(cuts) %>%
+    summarise(avg_senti = mean(senti_score, na.rm = TRUE), sent_before = sent_before[1]) %>%
+    mutate(cuts = as.POSIXct(as.character(cuts)))
+ggplot(champion_senti, aes(x = cuts, y = avg_senti)) +
+    geom_point(aes(color = sent_before)) +
+    scale_color_manual(values = pal[c(1,5)], guide = FALSE) +
+    theme_rcapper() + geom_smooth() +
+    labs(x = "Time", y = "Count", title = "Champion Hurdle Sentiment:\ntweets sent before race (blue) and after (red)")
+```
+</div>
+</div>
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# get champ hurdle runners into list, and name the list
+champrunnerslist <- as.list(champrunners)
+names(champrunnerslist) <- champrunners
+
+# subset champion hurdle tweets sent before race started
+championbefore <- subset(champion, sent_before)$text
+# find how many tweets
+ntweets <- length(championbefore)
+# loop through runners, count how many mentions each horse gets
+champcountsbefore <- lapply(champrunnerslist, function(x) length(findtweets(championbefore, searchfor = x, counts = T)))
+# convert to dataframe
+champcountsbefore <- plyr::ldply(champcountsbefore)
+# change names
+names(champcountsbefore) <- c("horse", "count")
+# order counts into descending, factorise horses, calculate proportion of tweets and plot
+champcountsbefore <- champcountsbefore %>%
+    arrange(desc(count)) %>%
+    mutate(horse = factor(horse, levels = horse), prop = count / ntweets)
+
+# subset tweets sent after the race
+championafter <- subset(champion, !sent_before)$text
+# count how many
+ntweets <- length(championafter)
+# loop through runners count the number of mentions
+champcountsafter <- lapply(champrunnerslist, function(x) length(findtweets(championafter, searchfor = x, counts = T)))
+# convert to dataframe
+champcountsafter <- plyr::ldply(champcountsafter)
+# rename
+names(champcountsafter) <- c("horse", "count")
+# order counts into descending, factorise horses, calculate proportion of tweets and plot
+champcountsafter <- champcountsafter %>%
+    arrange(desc(count)) %>%
+    mutate(horse = factor(horse, levels = horse), prop = count / ntweets)
+```
+
+
+Also of interest is which horses were popular on twitter, is there any wisdom in the twitter crowd?  The plots below show the number of tweets that mention each of the `r length(champrunners)` runners, the plot on the left is restricted to those tweets sent before the race, the plot to the right is tweets after the race.  **`r champcountsbefore$horse[which.max(champcountsbefore$prop)]`** was a heavy favourite on twitter and was mentioned in **`r round(champcountsbefore$prop[which.max(champcountsbefore$prop)], 3)*100`**% of tweets that mentioned any runner in the race.  Faugheen was the strong favourite for the race, being sent off at 4/5 (implied ~55% chance of victory) by the bookies.  Faugheen was the winner, and it's no surprise that he dominated the post race mentions in **`r round(champcountsafter$prop[which.max(champcountsafter$prop)], 3)*100`**% of tweets.
+
+<div class="row">
+<div class="col-md-6">
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+champcountsbefore %>%
+    ggplot(aes(x = horse, y = prop)) + 
+        geom_bar(stat = "identity", alpha = .65, fill = wes_palette("Rushmore")[3], color = "#424242") +
+        theme_rcapper() + 
+        scale_y_continuous(limits = c(0, 1)) +
+        theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1)) +
+        labs(x = "Horse", y = "% of tweets", title = "Champion Hurdle Runners\n% of mentions before race")
+```
+</div>
+<div class="col-md-6">
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+champcountsafter %>%
+    ggplot(aes(x = horse, y = prop)) + 
+        geom_bar(stat = "identity", alpha = .65, fill = wes_palette("Rushmore")[3], color = "#424242") +
+        theme_rcapper() + 
+        scale_y_continuous(limits = c(0, 1)) +
+        theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1)) +
+        labs(x = "Horse", y = "% of tweets", title = "Champion Hurdle Runners\n% of mentions post race")
+```
+</div>
+</div>
+
+### mares hurdle
+
+```{r echo=FALSE, cache=TRUE}
+maresrunners <- subset(day_one_runners, time == "4:00")$horse
+ind <- findtweets(day_one$text, searchfor = maresrunners)
+mares <- day_one[ind, ]
+
+mares$sent_before <- ifelse(mares$created_at <= as.POSIXct("2015-03-10 16:00"), TRUE, FALSE)
+```
+
+
+The Mares Hurdle featured a larger field compared to the Champion Hurdle, but it featured a horse who dominated the tweets both pre and post race, that horse was another Willie Mullins trained horse, Annie Power.  If you read my daily overview (see [here](daily_overview.html)) then you may recall the sentiment nosedived on Day one at around 16:00, this race and Annie Power is the reason.
+
+The plots below shows the number of tweets sent per minute that menioned one of the `r length(maresrunners)` runners, and the sentiment of those same tweets over 10minute intervals.  Discussion around the race took a sharp increase around 15:25, shortly after the Champion Hurdle had finished, this race is typically not that widely discussed, but the fact Willie Mullins had won the 3 previous Grade 1 races on the card, fuelled discussion.
+
+Anyone who watched, or read about the days action, won't have missed one of the most dramatic climaxes to a Festival race in memory.  Annie Power was the heavy favourite (1/2 with bookies) and given her popular trainer she was set to deliver a significant blow to the bookies, she powered through her race and swung into the home turn still on the bridle.  Approaching the last, she just needed to pop over and walk home... she fell, and with that crashing fall the sentiment of twitter crowd slumped to the ground with her.  A replay of the race is [here](https://www.youtube.com/watch?v=15pG2ZdwTP8) for those who missed it.
+
+<sub>The sentiment of bookies was probably the polar opposite!!</sub>
+
+<div class="row">
+<div class="col-md-6">
+```{r echo=FALSE, fig.align='center'}
+ggplot(mares, aes(x = created_at, fill = sent_before)) +
+    geom_bar(binwidth = 60) +
+    scale_fill_manual(values = pal[c(1,5)], guide = FALSE) +
+    theme_rcapper() +
+    labs(x = "Time", y = "Count", title = "Mares Hurdle:\ntweets sent before race (blue) and after (red)")
+```
+</div>
+<div class="col-md-6">
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+times <- seq(min(mares$created_at), max(mares$created_at), by = 600)
+mares_senti <- mares %>%
+    mutate(cuts = cut(created_at, breaks = times)) %>%
+    group_by(cuts) %>%
+    summarise(avg_senti = mean(senti_score, na.rm = TRUE), sent_before = sent_before[1]) %>%
+    mutate(cuts = as.POSIXct(as.character(cuts)))
+ggplot(mares_senti, aes(x = cuts, y = avg_senti)) +
+    geom_point(aes(color = sent_before)) +
+    scale_color_manual(values = pal[c(1,5)], guide = FALSE) +
+    theme_rcapper() + geom_smooth() +
+    labs(x = "Time", y = "Count", title = "Mares Hurdle Sentiment:\ntweets sent before race (blue) and after (red)")
+```
+</div>
+</div>
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# get champ hurdle runners into list, and name the list
+maresrunnerslist <- as.list(maresrunners)
+names(maresrunnerslist) <- maresrunners
+
+# subset champion hurdle tweets sent before race started
+maresbefore <- subset(mares, sent_before)$text
+# find how many tweets
+ntweets <- length(maresbefore)
+# loop through runners, count how many mentions each horse gets
+marescountsbefore <- lapply(maresrunnerslist, function(x) length(findtweets(maresbefore, searchfor = x, counts = T)))
+# convert to dataframe
+marescountsbefore <- plyr::ldply(marescountsbefore)
+# change names
+names(marescountsbefore) <- c("horse", "count")
+# order counts into descending, factorise horses, calculate proportion of tweets and plot
+marescountsbefore <- marescountsbefore %>%
+    arrange(desc(count)) %>%
+    mutate(horse = factor(horse, levels = horse), prop = count / ntweets)
+
+# subset tweets sent after the race
+maresafter <- subset(mares, !sent_before)$text
+# count how many
+ntweets <- length(maresafter)
+# loop through runners count the number of mentions
+marescountsafter <- lapply(maresrunnerslist, function(x) length(findtweets(maresafter, searchfor = x, counts = T)))
+# convert to dataframe
+marescountsafter <- plyr::ldply(marescountsafter)
+# rename
+names(marescountsafter) <- c("horse", "count")
+# order counts into descending, factorise horses, calculate proportion of tweets and plot
+marescountsafter <- marescountsafter %>%
+    arrange(desc(count)) %>%
+    mutate(horse = factor(horse, levels = horse), prop = count / ntweets)
+```
+
+
+Also of interest is which horses were popular on twitter, is there any wisdom in the twitter crowd?  The plots below show the number of tweets that mention each of the `r length(maresrunners)` runners, the plot on the left is restricted to those tweets sent before the race, the plot to the right is tweets after the race.  **`r marescountsbefore$horse[which.max(marescountsbefore$prop)]`** was a heavy favourite on twitter and was mentioned in **`r round(marescountsbefore$prop[which.max(marescountsbefore$prop)], 3)*100`**% of tweets that mentioned any runner in the race.  As mentioned Annie Power was a very strong favourite for the race.  The eventual winner was Glen's Melody, but the post race talk was all about Annie Power and her last flight fall,, she dominated the post race mentions in **`r round(marescountsafter$prop[which.max(marescountsafter$prop)], 3)*100`**% of tweets.
+
+<div class="row">
+<div class="col-md-6">
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+marescountsbefore %>%
+    ggplot(aes(x = horse, y = prop)) + 
+        geom_bar(stat = "identity", alpha = .65, fill = wes_palette("Rushmore")[3], color = "#424242") +
+        theme_rcapper() + 
+        scale_y_continuous(limits = c(0, 1)) +
+        theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1)) +
+        labs(x = "Horse", y = "% of tweets", title = "Mares Hurdle Runners\n% of mentions before race")
+```
+</div>
+<div class="col-md-6">
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+marescountsafter %>%
+    ggplot(aes(x = horse, y = prop)) + 
+        geom_bar(stat = "identity", alpha = .65, fill = wes_palette("Rushmore")[3], color = "#424242") +
+        theme_rcapper() + 
+        scale_y_continuous(limits = c(0, 1)) +
+        theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1)) +
+        labs(x = "Horse", y = "% of tweets", title = "Mares Hurdle Runners\n% of mentions post race")
+```
+</div>
+</div>

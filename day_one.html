@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title>day one</title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/united.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: #FCFCFC;
+	text-align: justify;
+}
+@media (max-width: 979px) {
+	body {
+		padding-top: 0;
+	}
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+@media (min-width: 980px) {
+	.section h2 {
+		padding-top: 52px;
+		margin-top: -52px;
+	}
+	.section h3 {
+		padding-top: 52px;
+		margin-top: -52px;
+	}
+}
+p {
+	font-size: 13px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+	color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+	margin-top: 45px;
+}
+
+</style>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<h1>Cheltenham Festival 2015 - Twitter Analysis</h1>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="http://durtal.github.io/">durtal.github.io</a>
+		</div>
+
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li><a href="index.html">Intro</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Preparation <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="collection.html">Collecting</a></li>
+						<li><a href="cleaning.html">Cleaning</a></li>
+						<li><a href="classifying.html">Classifying</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Race Days <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="daily_overview.html">Overview</a></li>
+						<li class="divider"></li>
+						<li><a href="day_one.html">Day One</a></li>
+						<li class="disabled"><a href="#">Day Two</a></li>
+						<li class="disabled"><a href="#">Day Three</a></li>
+						<li class="disabled"><a href="#">Day Four</a></li>
+					</ul>
+				</li>
+				<!-- <li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Championship Races <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li class="disabled"><a href="#">Supreme</a></li>
+						<li class="disabled"><a href="#">Arkle</a></li>
+						<li class="disabled"><a href="#">Champion Hurdle</a></li>
+						<li class="disabled"><a href="#">Champion Chase</a></li>
+						<li class="disabled"><a href="#">RSA</a></li>
+						<li class="disabled"><a href="#">Gold Cup</a></li>
+					</ul>
+				</li> -->
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="useful_links.html">Useful Links</a></li>
+				<li><a href="https://github.com/durtal/cheltenham-festival-2015-twitter"><i class="fa fa-github fa-lg"></i>
+				</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<div id="header">
+<h1 class="title">day one</h1>
+</div>
+
+
+<a href="https://twitter.com/share" class="twitter-share-button" data-text="Cheltenham Festival 2015 Day One, Twitter Analysis" data-via="UTVilla" data-hashtags="rstats,CheltenhamFestival">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<p>Over the course of the opening day of the 2015 Cheltenham Festival, <strong>94463</strong> tweets were collected They were collected if they mentioned any of the runners in the Championship Races (Grade 1s), or a number of other related words. The opening day featured more tweets than the other three days, it likely attracts casual fans of the sport to tweet, while the more hardy/passionate fans will remain engaged across the four days.</p>
+<p>The horses ‘tracked’ on day one, are shown in the table below:</p>
+<p><sub>A small footnote, tracking some horses by name will undoubtedly collect tweets that were not about the Festival or the horse, an example of this is the horse Smashing, running in the Arkle. The word smashing is very likely to appear in a tweet outside of racing, compared to a tweet that mentions Dunraven Storm (from the same race). “Smashing” featured in 1953 tweets, a fair number of these were about ITV this morning and marvinhumes and rochellethesats “smashing” it.</sub></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Day</th>
+<th align="left">Race</th>
+<th align="left">Time</th>
+<th align="left">Horses</th>
+<th align="left">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">Supreme Novices</td>
+<td align="left">13:30</td>
+<td align="left"><em>Alvisio Ville, Bentelimar, Douvan, Jollyallan, L´Ami Serge, Qewy, Seedling, Shaneshill, Sizing John, Some Plan, Tell Us More, Velvet Maker</em></td>
+<td align="left">12</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">Arkle</td>
+<td align="left">14:05</td>
+<td align="left"><em>Clarcam, Court Minstrel, Dunraven Storm, God´s Own, Josses Hill, Sail By The Sea, Sgt Reckless, Smashing, Three Kingdoms, Un De Sceaux, Vibrato Valtat</em></td>
+<td align="left">11</td>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">Champion Hurdle</td>
+<td align="left">15:20</td>
+<td align="left"><em>Arctic Fire, Bertimont, Faugheen, Hurricane Fly, Jezki, Kitten Rock, The New One, Vaniteux</em></td>
+<td align="left">8</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">Mares Hurdle</td>
+<td align="left">16:00</td>
+<td align="left"><em>Annie Power, Bitofapuzzle, Carole´s Spirit, Centasia, Dark Spirit, Emily Gray, Glens Melody, Hidden Identity, L´Unique, Mischievous Milly, Pass The Time, Polly Peachum, Sureness, Swing Bowler, The Govaness, The Pirate´s Queen</em></td>
+<td align="left">16</td>
+</tr>
+</tbody>
+</table>
+<div id="timeline" class="section level3">
+<h3>timeline</h3>
+<p>The plot below shows the timeline from the opening day, included in the plot are four vertical lines charting the start times of the various races. These races were the <strong>Supreme Novices</strong> (13:30), the <strong>Arkle</strong> (14:05), the <strong>Champion Hurdle</strong> (15:20) and the <strong>Mares Hurdle</strong> (16:00). It becomes clearer that the peaks are post race reactions, but also interesting is the drop in the number of tweets sent between the race starting and the race being completed.</p>
+<p><img src="day_one_files/figure-html/unnamed-chunk-3-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="races-and-runners" class="section level3">
+<h3>races and runners</h3>
+<p>The two plots below shows the number of tweets that mention a runner from each Championship race, and the most mentioned horses. The most tweeted about race was the Champion Hurdle, with 21293 tweets, closely followed by the Mares Hurdle with 19807. To the right</p>
+<div class="row">
+<div class="col-md-6">
+<img src="day_one_files/figure-html/unnamed-chunk-5-1.png" title="" alt="" width="550px" height="400px" style="display: block; margin: auto;" />
+</div>
+<div class="col-md-6">
+<img src="day_one_files/figure-html/unnamed-chunk-6-1.png" title="" alt="" width="550px" height="400px" style="display: block; margin: auto;" />
+</div>
+</div>
+<p>I’ll only look at two races from Day One, the Champion Hurdle and the Mares Hurdle (but if anyone wants to see other races looked at let me know and I’ll try add them).</p>
+</div>
+<div id="champion-hurdle" class="section level3">
+<h3>champion hurdle</h3>
+<p>The Champion Hurdle featured a relatively small field compared to other Championship races, with just 8 runners, won by the Willie Mullins trained Faugheen. The plots below shows the number of tweets sent per minute that menioned one of the 8 runners, and the sentiment of those same tweets over 10minute intervals. Naturally the volume of tweets increase as the race is completed, also plotted in the sentiment plot is a loess curve, showing that sentiment takes quite a sharp upturn after the race is completed.</p>
+<div class="row">
+<div class="col-md-6">
+<img src="day_one_files/figure-html/unnamed-chunk-8-1.png" title="" alt="" width="672" style="display: block; margin: auto;" />
+</div>
+<div class="col-md-6">
+<img src="day_one_files/figure-html/unnamed-chunk-9-1.png" title="" alt="" width="672" style="display: block; margin: auto;" />
+</div>
+</div>
+<p>Also of interest is which horses were popular on twitter, is there any wisdom in the twitter crowd? The plots below show the number of tweets that mention each of the 8 runners, the plot on the left is restricted to those tweets sent before the race, the plot to the right is tweets after the race. <strong>Faugheen</strong> was a heavy favourite on twitter and was mentioned in <strong>65.4</strong>% of tweets that mentioned any runner in the race. Faugheen was the strong favourite for the race, being sent off at 4/5 (implied ~55% chance of victory) by the bookies. Faugheen was the winner, and it’s no surprise that he dominated the post race mentions in <strong>85.8</strong>% of tweets.</p>
+<div class="row">
+<div class="col-md-6">
+<img src="day_one_files/figure-html/unnamed-chunk-11-1.png" title="" alt="" width="672" style="display: block; margin: auto;" />
+</div>
+<div class="col-md-6">
+<img src="day_one_files/figure-html/unnamed-chunk-12-1.png" title="" alt="" width="672" style="display: block; margin: auto;" />
+</div>
+</div>
+</div>
+<div id="mares-hurdle" class="section level3">
+<h3>mares hurdle</h3>
+<p>The Mares Hurdle featured a larger field compared to the Champion Hurdle, but it featured a horse who dominated the tweets both pre and post race, that horse was another Willie Mullins trained horse, Annie Power. If you read my daily overview (see <a href="daily_overview.html">here</a>) then you may recall the sentiment nosedived on Day one at around 16:00, this race and Annie Power is the reason.</p>
+<p>The plots below shows the number of tweets sent per minute that menioned one of the 16 runners, and the sentiment of those same tweets over 10minute intervals. Discussion around the race took a sharp increase around 15:25, shortly after the Champion Hurdle had finished, this race is typically not that widely discussed, but the fact Willie Mullins had won the 3 previous Grade 1 races on the card, fuelled discussion.</p>
+<p>Anyone who watched, or read about the days action, won’t have missed one of the most dramatic climaxes to a Festival race in memory. Annie Power was the heavy favourite (1/2 with bookies) and given her popular trainer she was set to deliver a significant blow to the bookies, she powered through her race and swung into the home turn still on the bridle. Approaching the last, she just needed to pop over and walk home… she fell, and with that crashing fall the sentiment of twitter crowd slumped to the ground with her. A replay of the race is <a href="https://www.youtube.com/watch?v=15pG2ZdwTP8">here</a> for those who missed it.</p>
+<p><sub>The sentiment of bookies was probably the polar opposite!!</sub></p>
+<div class="row">
+<div class="col-md-6">
+<img src="day_one_files/figure-html/unnamed-chunk-14-1.png" title="" alt="" width="672" style="display: block; margin: auto;" />
+</div>
+<div class="col-md-6">
+<img src="day_one_files/figure-html/unnamed-chunk-15-1.png" title="" alt="" width="672" style="display: block; margin: auto;" />
+</div>
+</div>
+<p>Also of interest is which horses were popular on twitter, is there any wisdom in the twitter crowd? The plots below show the number of tweets that mention each of the 16 runners, the plot on the left is restricted to those tweets sent before the race, the plot to the right is tweets after the race. <strong>Annie Power</strong> was a heavy favourite on twitter and was mentioned in <strong>90.9</strong>% of tweets that mentioned any runner in the race. As mentioned Annie Power was a very strong favourite for the race. The eventual winner was Glen’s Melody, but the post race talk was all about Annie Power and her last flight fall,, she dominated the post race mentions in <strong>89.1</strong>% of tweets.</p>
+<div class="row">
+<div class="col-md-6">
+<img src="day_one_files/figure-html/unnamed-chunk-17-1.png" title="" alt="" width="672" style="display: block; margin: auto;" />
+</div>
+<div class="col-md-6">
+<img src="day_one_files/figure-html/unnamed-chunk-18-1.png" title="" alt="" width="672" style="display: block; margin: auto;" />
+</div>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>
