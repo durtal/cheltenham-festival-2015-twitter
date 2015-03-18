@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title>day three</title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/united.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: #FCFCFC;
+	text-align: justify;
+}
+@media (max-width: 979px) {
+	body {
+		padding-top: 0;
+	}
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+@media (min-width: 980px) {
+	.section h2 {
+		padding-top: 52px;
+		margin-top: -52px;
+	}
+	.section h3 {
+		padding-top: 52px;
+		margin-top: -52px;
+	}
+}
+p {
+	font-size: 13px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+	color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+	margin-top: 45px;
+}
+
+</style>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<h1>Cheltenham Festival 2015 - Twitter Analysis</h1>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="http://durtal.github.io/">durtal.github.io</a>
+		</div>
+
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li><a href="index.html">Intro</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Preparation <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="collection.html">Collecting</a></li>
+						<li><a href="cleaning.html">Cleaning</a></li>
+						<li><a href="classifying.html">Classifying</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Race Days <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="daily_overview.html">Overview</a></li>
+						<li class="divider"></li>
+						<li><a href="day_one.html">Day One</a></li>
+						<li><a href="day_two.html">Day Two</a></li>
+						<li class="disabled"><a href="#">Day Three</a></li>
+						<li class="disabled"><a href="#">Day Four</a></li>
+					</ul>
+				</li>
+				<!-- <li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Championship Races <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li class="disabled"><a href="#">Supreme</a></li>
+						<li class="disabled"><a href="#">Arkle</a></li>
+						<li class="disabled"><a href="#">Champion Hurdle</a></li>
+						<li class="disabled"><a href="#">Champion Chase</a></li>
+						<li class="disabled"><a href="#">RSA</a></li>
+						<li class="disabled"><a href="#">Gold Cup</a></li>
+					</ul>
+				</li> -->
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="useful_links.html">Useful Links</a></li>
+				<li><a href="https://github.com/durtal/cheltenham-festival-2015-twitter"><i class="fa fa-github fa-lg"></i>
+				</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<div id="header">
+<h1 class="title">day three</h1>
+</div>
+
+
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://durtal.github.io/cheltenham-festival-2015-twitter/day_three.html" data-text="Cheltenham Festival 2015 Day Three, Twitter Analysis" data-via="UTVilla" data-related="_RcappeR" data-hashtags="rstats,CheltenhamFestival">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<p>Day Three of the Festival was similar to Day Two in that fewer tweets were collected, unlike Day Two collection wasn’t interupted, so it’s probably the quietest day on twitter, with just <strong>53784</strong> tweets being collected. Tweets were collected if they mentioned any of the runners in the Championship Races (Grade 1s), or a number of related words. As mentioned in the post about <a href="day_one.html">Day One</a>, casual fans aren’t as likely to maintain interest over the four days.</p>
+<p>The horses ‘tracked’ on day three are shown in the table below:</p>
+<p><sub>Again a small footnote, tracking some horses by name will collect tweets that were not about the Festival or the horse, an example on Day Three is the horse Whisper, a runner in the 15:20 World Hurdle. Whisper will be used in everyday tweets, indeed it was mentioned in 3351 tweets. This race won’t be looked at in this post, but I may attempt to address this issue in future posts.</sub></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Day</th>
+<th align="left">Race</th>
+<th align="left">Time</th>
+<th align="left">Horses</th>
+<th align="left">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">JLT Novices Chase</td>
+<td align="left">13:30</td>
+<td align="left"><em>Apache Stronghold, Colour Squadron, Irish Saint, Ptit Zig, Splash Of Ginge, Tango De Juilley, The Tullow Tank, Valseur Lido, Vautour</em></td>
+<td align="left">9</td>
+</tr>
+<tr class="even">
+<td align="left">3</td>
+<td align="left">Ryanair Chase</td>
+<td align="left">14:40</td>
+<td align="left"><em>Balder Succes, Ballycasey, Don Cossack, Double Ross, Eduard, Foxrock, Hidden Cyclone, Johns Spirit, Taquin Du Seuil, Third Intention, Uxizandre, Wishfull Thinking, Wonderful Charm, Ma Filleule</em></td>
+<td align="left">14</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">World Hurdle</td>
+<td align="left">15:20</td>
+<td align="left"><em>Abbyssial, At Fishers Cross, Aubusson, Blue Fashion, Cole Harden, Dedigout, Jetson, Lieutenant Colonel, Monksland, Reve De Sivola, Saphir Du Rheu, Seeyouatmidnight, Tiger Roll, Un Temps Pour Tout, Whisper, Zaidpour, Zarkandar</em></td>
+<td align="left">17</td>
+</tr>
+</tbody>
+</table>
+<div id="timeline" class="section level3">
+<h3>timeline</h3>
+<p>The plot below shows the timeline on Day Three, included in the plot are three vertical lines charting the start times of the various races. These races were the <strong>JLT Novices Chase</strong> (13:30), the <strong>Ryanair Chase</strong> (14:40) and the <strong>World Hurdle</strong> (15:20). The frequency of tweets is lower than on previous days, with only the JLT Novices Chase prompting the twitter crowd to react. The minute shortly after Vautour won prompted over 1200 tweets to be sent, the most for any single minute across all four days.</p>
+<p><img src="day_three_files/figure-html/unnamed-chunk-3-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="races-and-runners" class="section level3">
+<h3>races and runners</h3>
+<p>The two plots below shows the number of tweets that mention a runner from each Championship race, and the most mentioned horses. The most tweeted about race on Day Three was the JLT, with 14091 tweets, the World Hurdle was close behind with 10294 (but bear in mind the horse Whisper will include a large number of mis-classified tweets).</p>
+<div class="row">
+<div class="col-md-6">
+<img src="day_three_files/figure-html/unnamed-chunk-5-1.png" title="" alt="" width="550px" height="400px" style="display: block; margin: auto;" />
+</div>
+<div class="col-md-6">
+<img src="day_three_files/figure-html/unnamed-chunk-6-1.png" title="" alt="" width="550px" height="400px" style="display: block; margin: auto;" />
+</div>
+</div>
+<p>The race I’ll focus on in this post is the JLT Novices Chase, but if anyone wants to see other races, then let me know.</p>
+</div>
+<div id="jlt-novices-chase" class="section level3">
+<h3>jlt novices chase</h3>
+<p>The JLT Novices Chase featured a small field, with just 9 runners, but it was won in very impressive fashion by the <em>copy</em> <em>paste</em> Willie Mullins trained Vautour. The plots below shows the number of tweets sent per minute that mentioned one of the 9 runners, and the sentiment of those same tweets of 10minute intervals. The volume of tweets increased massively as Vautour won by 15 lengths. Also plotted in the sentiment plot is a loess curve, showing that sentiment of the race/winner is confused, with wide swings. Part of this is likely due to the negative lexicon I employed, which classes “monster” and “freak”, as well as swear words like “f**k” and “f**king” as negative, and I think the manner of Vautour’s victory would have produced sentiments like this. (I will perhaps try and “correct” the negative lexicon and come back to this).</p>
+<div class="row">
+<div class="col-md-6">
+<img src="day_three_files/figure-html/unnamed-chunk-8-1.png" title="" alt="" width="672" style="display: block; margin: auto;" />
+</div>
+<div class="col-md-6">
+<img src="day_three_files/figure-html/unnamed-chunk-9-1.png" title="" alt="" width="672" style="display: block; margin: auto;" />
+</div>
+</div>
+<p>Also of interest is which horses were popular on twitter, is there any wisdom in the twitter crowd? The plots below show the number of tweets that mention each of the 9 runners, the plot on the left is restricted to those tweets sent before the race, the plot to the right is tweets after the race. <strong>Vautour</strong> was a heavy favourite on twitter and was mentioned in <strong>77.8</strong>% of tweets that mentioned any runner in the race, he was sent off at 6/4 (implied ~40% chance of victory) by the bookies. Vautour romped home, and it’s no surprise that he dominated the post race mentions in <strong>96.6</strong>% of tweets.</p>
+<div class="row">
+<div class="col-md-6">
+<img src="day_three_files/figure-html/unnamed-chunk-11-1.png" title="" alt="" width="672" style="display: block; margin: auto;" />
+</div>
+<div class="col-md-6">
+<img src="day_three_files/figure-html/unnamed-chunk-12-1.png" title="" alt="" width="672" style="display: block; margin: auto;" />
+</div>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>
