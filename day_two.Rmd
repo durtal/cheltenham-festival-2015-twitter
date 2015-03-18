@@ -1,5 +1,5 @@
 ---
-title: "day_two"
+title: "day two"
 ---
 
 ```{r echo=FALSE, cache=TRUE}
@@ -62,14 +62,14 @@ names(rnrs) <- subset(day_two_runners, G1)$horse
 runnercounts <- lapply(rnrs, function(x) length(findtweets(day_two$text, x, counts = TRUE)))
 runnercounts <- plyr::ldply(runnercounts)
 names(runnercounts) <- c("horse", "count")
-runnercounts <- runnercounts %>% 
+runnercounts <- runnercounts %>%
     arrange(desc(count)) %>%
     mutate(horse = factor(horse, levels = horse))
 ```
 
 ### races and runners
 
-The two plots below shows the number of tweets that mention a runner from each Championship race on Day 2, and the most mentioned horses.  The most tweeted about race was the Champion Chase, with `r racecounts$count[which(racecounts$race == "Champion")]` tweets, meanwhile the other two Championship races had fewer than 10,000 tweets.  To the right is a plot showing the number of tweets that mention a runner.
+The two plots below shows the number of tweets that mention a runner from each Championship race on Day 2, and the most mentioned horses.  The most tweeted about race was the Champion Chase, with `r racecounts$count[which(racecounts$race == "Champion")]` tweets, meanwhile the other two Championship races had fewer than 10,000 tweets.  To the right is a plot showing the number mentions a runner received.
 
 <div class="row">
 <div class="col-md-6">
@@ -89,7 +89,7 @@ runnercounts %>%
         geom_bar(stat = "identity", fill = wes_palette("Rushmore")[3], alpha = .65, color = "#424242") +
         theme_rcapper() +
         theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1)) +
-        labs(x = "Horse", y = "Count", title = "No. of tweets per Horse")
+        labs(x = "Horse", y = "Count", title = "No. of mentions per Horse")
 ```
 </div>
 </div>
@@ -106,7 +106,7 @@ champion <- day_two[ind, ]
 champion$sent_before <- ifelse(champion$created_at <= as.POSIXct("2015-03-11 15:20"), TRUE, FALSE)
 ```
 
-The Champion Chase favourite (at the off) was Sprinter Sacre at 9/4, with Sire De Grugy second favourite at 5/2, but both had questions hanging over them.  Nevertheless Sprinter Sacre was the most mentioned horse from this race, his staggering win in this race two years ago will unlikely to be forgotten any time soon.  The plots below shows the number of tweets sent per minute that menioned one of the `r length(champrunners)` runners, and the sentiment of those same tweets over 10minute intervals.  Naturally the volume of tweets increase as the race is completed, also plotted in the sentiment plot is a loess curve, showing that sentiment takes quite a sharp upturn after the race is completed.
+The Champion Chase favourite (at the off) was Sprinter Sacre at 9/4, with Sire De Grugy second favourite at 5/2, but both had questions hanging over them.  Nevertheless Sprinter Sacre was the most mentioned horse from this race, his staggering win in this race two years ago will unlikely to be forgotten any time soon.  The plots below shows the number of tweets sent per minute that menioned one of the `r length(champrunners)` runners, and the sentiment of those same tweets over 10minute intervals.  Naturally the volume of tweets increase as the race is completed, also plotted in the sentiment plot is a loess curve, sentiment doesn't increase or decrease post race, different to the post race reactions from day one (see [here](day_one.html)).
 
 There is an interesting sudden rise in the number of tweets around 11:20 in the morning, it appears as though this was due to the news that Champagne Fever was withdrawn from the race.
 
@@ -173,7 +173,7 @@ champcountsafter <- champcountsafter %>%
     mutate(horse = factor(horse, levels = horse), prop = count / ntweets)
 ```
 
-Also of interest is which horses were popular on twitter, is there any wisdom in the twitter crowd?  The plots below show the number of tweets that mention each of the `r length(champrunners)` runners, the plot on the left is restricted to those tweets sent before the Champion Chase, the plot to the right is tweets after the race.  **`r champcountsbefore$horse[which.max(champcountsbefore$prop)]`** was the favourite on twitter and was mentioned in **`r round(champcountsbefore$prop[which.max(champcountsbefore$prop)], 3)*100`**% of tweets that mentioned any runner in the race.  Champagne Fever was the second most mentioned pre race.  The eventual winner was Dodging Bullets, mentioned in **`r round(champcountsbefore$prop[which(champcountsbefore$horse == "Dodging Bullets")], 3)*100`**% of tweets, it's no surprise that he dominated the post race mentions, being mentioned in **`r round(champcountsafter$prop[which.max(champcountsafter$prop)], 3)*100`**% of tweets.  Despite being pulled up, Sprinter Sacre was mentioned in **`r round(champcountsafter$prop[which(champcountsafter$horse == "Sprinter Sacre")], 3)*100`**% of tweets.
+Also of interest is which horses were popular on twitter, is there any wisdom in the twitter crowd?  The plots below show the number of tweets that mention each of the `r length(champrunners)` runners, the plot on the left is restricted to those tweets sent before the Champion Chase, the plot to the right is tweets after the race.  **`r champcountsbefore$horse[which.max(champcountsbefore$prop)]`** was the favourite on twitter and was mentioned in **`r round(champcountsbefore$prop[which.max(champcountsbefore$prop)], 3)*100`**% of tweets that mentioned any runner in the race.  Champagne Fever was the second most mentioned pre race.  The eventual winner was Dodging Bullets, mentioned in **`r round(champcountsbefore$prop[which(champcountsbefore$horse == "Dodging Bullets")], 3)*100`**% of tweets pre race, it's no surprise that he dominated the post race mentions, being mentioned in **`r round(champcountsafter$prop[which.max(champcountsafter$prop)], 3)*100`**% of tweets.  Despite being pulled up, Sprinter Sacre was mentioned in **`r round(champcountsafter$prop[which(champcountsafter$horse == "Sprinter Sacre")], 3)*100`**% of tweets.
 
 <div class="row">
 <div class="col-md-6">

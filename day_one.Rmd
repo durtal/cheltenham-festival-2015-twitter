@@ -73,7 +73,7 @@ runnercounts <- runnercounts %>% arrange(desc(count)) %>%
 
 ### races and runners
 
-The two plots below shows the number of tweets that mention a runner from each Championship race, and the most mentioned horses.  The most tweeted about race was the Champion Hurdle, with `r racecounts$count[which(racecounts$race == "Champion")]` tweets, closely followed by the Mares Hurdle with `r racecounts$count[which(racecounts$race == "Mares")]`.  To the right is a plot showing the number of tweets that mention a runner.
+The two plots below shows the number of tweets that mention a runner from each Championship race, and the most mentioned horses.  The most tweeted about race was the Champion Hurdle, with `r racecounts$count[which(racecounts$race == "Champion")]` tweets, closely followed by the Mares Hurdle with `r racecounts$count[which(racecounts$race == "Mares")]`.  To the right is a plot showing the number mentions a runner received.
 
 <div class="row">
 <div class="col-md-6">
@@ -93,7 +93,7 @@ runnercounts %>%
         geom_bar(stat = "identity", fill = wes_palette("Rushmore")[3], alpha = .65, color = "#424242") +
         theme_rcapper() +
         theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1)) +
-        labs(x = "Horse", y = "Count", title = "No. of tweets per Horse")
+        labs(x = "Horse", y = "Count", title = "No. of mentions per Horse")
 ```
 </div>
 </div>
