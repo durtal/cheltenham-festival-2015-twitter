@@ -15,6 +15,7 @@ rm(allrunners, racing)
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 # load libraries
+
 library(dplyr)
 library(ggplot2)
 library(reshape)

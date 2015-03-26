@@ -1,0 +1,203 @@
+---
+title: "day four"
+---
+
+```{r echo=FALSE, cache=TRUE}
+# load data
+load("data/clean_tweets.RData")
+
+day_four <- subset(racing, .id == "day4")
+day_four_runners <- subset(allrunners, .id == "day4")
+day_four_runners$date_time <- paste(day_four_runners$date, day_four_runners$time)
+
+rm(allrunners, racing)
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# load libraries
+
+library(dplyr)
+library(ggplot2)
+library(reshape)
+library(RcappeR)
+library(wesanderson)
+
+pal <- wes_palette(name = "Darjeeling")
+```
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://durtal.github.io/cheltenham-festival-2015-twitter/day_four.html" data-text="Cheltenham Festival 2015 Day Four, Twitter Analysis" data-via="UTVilla" data-related="_RcappeR" data-hashtags="rstats,CheltenhamFestival">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+Day Four of the Festival saw more people tweet and more tweets than the previous two days, however it wasn't close to the number sent on Day One, overall there were **`r length(day_four$text)`** tweets collected.  Tweets were collected if they mentioned any of the runners in the Championship Races (Grade 1s), or a number of related words.  As mentioned in the post about [Day One](day_one.html), casual fans aren't as likely to maintain interest over the four days, but casual fans probably did return for the climax of the Festival.
+
+The horses 'tracked' on day four are shown in the table below:
+
+Day | Race | Time | Horses | n
+----|------|------|--------|----
+4 | Triumph Hurdle | 13:30 | _`r subset(day_four_runners, time  == "1:30")$horse`_ | `r length(subset(day_four_runners, time  == "1:30")$horse)`
+4 | Albert Bartlett | 14:40 | _`r subset(day_four_runners, time  == "2:40")$horse`_ | `r length(subset(day_four_runners, time  == "2:40")$horse)`
+4 | Gold Cup | 15:20 | _`r subset(day_four_runners, time  == "3:20")$horse`_ | `r length(subset(day_four_runners, time  == "3:20")$horse)`
+
+### timeline
+
+The plot below shows the timeline on Day Three, included in the plot are three vertical lines charting the start times of the various races.  These races were the **Triumph Hurdle** (13:30), the **Albert Bartlett Novices Hurdle** (14:40) and the **Gold Cup** (15:20).  The frequency of tweets is slightly higher than on previous 2 days, and the culmination of the Gold Cup, won by Coneygree prompted a big reaction from the twitter crowd.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+# data frame of numeric times for adding vertical lines to timeline plot
+racetimes <- data.frame(date_time = as.numeric(as.POSIXct(c("2015-03-13 13:30", "2015-03-13 14:40","2015-03-13 15:20"))))
+ggplot(day_four, aes(x = created_at)) +
+	geom_bar(binwidth = 60, alpha = .65, fill = pal[1]) +
+	geom_vline(data = racetimes, aes(xintercept = date_time)) +
+	theme_rcapper() +
+	labs(x = "Time", y = "Count", title = "Cheltenham Festival Day 4\nTweet timeline")
+```
+
+
+```{r echo=FALSE, cache=TRUE}
+rnrs <- sapply(unique(subset(day_four_runners, G1)$date_time), function(x) subset(day_four_runners, date_time == x)$horse)
+racecounts <- lapply(rnrs, function(x) length(findtweets(day_four$text, x, counts = TRUE)))
+racecounts <- plyr::ldply(racecounts)
+names(racecounts) <- c("race", "count")
+racecounts$race <- c("Triumph", "Albert Bartlett", "Gold Cup")
+racecounts$race <- factor(racecounts$race, levels = unique(racecounts$race))
+
+rnrs <- as.list(subset(day_four_runners, G1)$horse)
+names(rnrs) <- subset(day_four_runners, G1)$horse
+runnercounts <- lapply(rnrs, function(x) length(findtweets(day_four$text, x, counts = TRUE)))
+runnercounts <- plyr::ldply(runnercounts)
+names(runnercounts) <- c("horse", "count")
+runnercounts <- runnercounts %>%
+	arrange(desc(count)) %>%
+	mutate(horse = factor(horse, levels = horse))
+```
+
+### races and runners
+
+The two plots below shows the number of tweets that mention a runner from each Championship race, and the most mentioned horses.  The most tweeted about race on Day Four was the Gold Cup, with `r racecounts$count[which(racecounts$race == "Gold Cup")]` tweets.
+
+<div class="row">
+<div class="col-md-6">
+```{r echo=FALSE, out.width="550px", out.height="400px", fig.align='center'}
+ggplot(racecounts, aes(x = race, y = count, fill = race)) +
+	geom_bar(stat = "identity", alpha = .65, color = "#424242") +
+	scale_fill_manual(values = pal[c(1,2,4,5)], guide = FALSE) +
+	theme_rcapper() +
+	labs(x = "Championship Race", y = "Count", title = "No. of tweets per Championship Race")
+```
+</div>
+<div class="col-md-6">
+```{r echo=FALSE, out.width="550px", out.height="400px", fig.align='center'}
+runnercounts %>%
+    head(10) %>%
+    ggplot(aes(x = horse, y = count)) +
+    	geom_bar(stat = "identity", fill = wes_palette("Rushmore")[3], alpha = .65, color = "#424242") +
+    	theme_rcapper() +
+    	theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1)) +
+    	labs(x = "Horse", y = "Count", title = "No. of mentions per Horse")
+```
+</div>
+</div>
+
+The race I'll focus on in this post is the Gold Cup, but if anyone wants to see other races, then let me know.
+
+### gold cup
+
+```{r echo=FALSE, cache=TRUE}
+goldcuprunners <- subset(day_four_runners, time == "3:20")$horse
+ind <- findtweets(day_four$text, searchfor = goldcuprunners)
+goldcup <- day_four[ind, ]
+
+goldcup$sent_before <- ifelse(goldcup$created_at <= as.POSIXct("2015-03-13 15:20"), TRUE, FALSE)
+```
+
+The Gold Cup featured a relatively large field, with `r length(goldcuprunners)` runners, but it was won in very impressive fashion by novice Coneygree, the first time a novice had won the Gold Cup since Captain Christy in 1974.  The plots below shows the number of tweets sent per minute that mentioned one of the `r length(goldcuprunners)` runners, and the sentiment of those same tweets of 10minute intervals.  The volume of tweets increased massively as Coneygree romped home from the front.  Also plotted in the sentiment plot is a loess curve, showing that sentiment of the race/winner is extremely positive, growing even more positive as the result sinks in.  This was by far the most positive reaction to the winners over the entire Festival, a post looking at the winners of the Grade 1 races should be written up eventually.
+
+<div class="row">
+<div class="col-md-6">
+```{r echo=FALSE, fig.align='center'}
+ggplot(goldcup, aes(x = created_at, fill = sent_before)) +
+	geom_bar(binwidth = 60) +
+	scale_fill_manual(values = pal[c(1,5)], guide = FALSE) +
+	theme_rcapper() +
+	labs(x = "Time", y = "Count", title = "Gold Cup:\ntweets sent before race (blue) and after (red)")
+```
+</div>
+<div class="col-md-6">
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+times <- seq(min(goldcup$created_at), max(goldcup$created_at), by = 300)
+goldcup_senti <- goldcup %>%
+	mutate(cuts = cut(created_at, breaks = times)) %>%
+	group_by(cuts) %>%
+	summarise(avg_senti = mean(senti_score, na.rm = TRUE), sent_before = sent_before[1]) %>%
+	mutate(cuts = as.POSIXct(as.character(cuts)))
+ggplot(goldcup_senti, aes(x = cuts, y = avg_senti)) +
+	geom_point(aes(color = sent_before)) +
+	scale_color_manual(values = pal[c(1,5)], guide = FALSE) +
+	theme_rcapper() + geom_smooth() +
+	labs(x = "Time", y = "Count", title = "Gold Cup Sentiment:\ntweets sent before race (blue) and after (red)")
+```
+</div>
+</div>
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# get goldcup runners into list, and name the list
+goldcuprunnerslist <- as.list(goldcuprunners)
+names(goldcuprunnerslist) <- goldcuprunners
+
+# subset goldcup tweets sent before race started
+goldcupbefore <- subset(goldcup, sent_before)$text
+# find how many tweets
+ntweets <- length(goldcupbefore)
+# loop through runners, count how many mentions each horse gets
+goldcupcountsbefore <- lapply(goldcuprunnerslist, function(x) length(findtweets(goldcupbefore, searchfor = x, counts = T)))
+# convert to dataframe
+goldcupcountsbefore <- plyr::ldply(goldcupcountsbefore)
+# change names
+names(goldcupcountsbefore) <- c("horse", "count")
+# order counts into descending, factorise horses, calculate proportion of tweets and plot
+goldcupcountsbefore <- goldcupcountsbefore %>%
+	arrange(desc(count)) %>%
+	mutate(horse = factor(horse, levels = horse), prop = count / ntweets)
+
+# subset tweets sent after the race
+goldcupafter <- subset(goldcup, !sent_before)$text
+# count how many
+ntweets <- length(goldcupafter)
+# loop through runners count the number of mentions
+goldcupcountsafter <- lapply(goldcuprunnerslist, function(x) length(findtweets(goldcupafter, searchfor = x, counts = T)))
+# convert to dataframe
+goldcupcountsafter <- plyr::ldply(goldcupcountsafter)
+# rename
+names(goldcupcountsafter) <- c("horse", "count")
+# order counts into descending, factorise horses, calculate proportion of tweets and plot
+goldcupcountsafter <- goldcupcountsafter %>%
+	arrange(desc(count)) %>%
+	mutate(horse = factor(horse, levels = horse), prop = count / ntweets)
+```
+
+
+Also of interest is which horses were popular on twitter, is there any wisdom in the twitter crowd?  The plots below show the number of tweets that mention each of the `r length(goldcuprunners)` runners, the plot on the left is restricted to those tweets sent before the race, the plot to the right is tweets after the race.  **`r goldcupcountsbefore$horse[which.max(goldcupcountsbefore$prop)]`** was the favourite on twitter and was mentioned in **`r round(goldcupcountsbefore$prop[which.max(goldcupcountsbefore$prop)], 3)*100`**% of tweets that mentioned any runner in the race, he was sent off at 3/1 (implied ~25% chance of victory) by the bookies.  Coneygree led from start to finish, setting a fierce gallop and jumping aggressively, putting rivals under pressure, it's no surprise that he dominated the post race mentions in **`r round(goldcupcountsafter$prop[which.max(goldcupcountsafter$prop)], 3)*100`**% of tweets.
+
+<div class="row">
+<div class="col-md-6">
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+goldcupcountsbefore %>%
+ggplot(aes(x = horse, y = prop)) +
+	geom_bar(stat = "identity", alpha = .65, fill = wes_palette("Rushmore")[3], color = "#424242") +
+	theme_rcapper() +
+	scale_y_continuous(limits = c(0, 1)) +
+	theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1)) +
+	labs(x = "Horse", y = "% of tweets", title = "JLT Novices Runners\n% of mentions before race")
+```
+</div>
+<div class="col-md-6">
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+goldcupcountsafter %>%
+ggplot(aes(x = horse, y = prop)) +
+	geom_bar(stat = "identity", alpha = .65, fill = wes_palette("Rushmore")[3], color = "#424242") +
+	theme_rcapper() +
+	scale_y_continuous(limits = c(0, 1)) +
+	theme(axis.text.x=element_text(angle=45, vjust=1, hjust=1)) +
+	labs(x = "Horse", y = "% of tweets", title = "JLT Novices Runners\n% of mentions post race")
+```
+</div>
+</div>

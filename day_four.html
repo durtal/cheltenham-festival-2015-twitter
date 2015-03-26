@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title>day four</title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/united.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: #FCFCFC;
+	text-align: justify;
+}
+@media (max-width: 979px) {
+	body {
+		padding-top: 0;
+	}
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+@media (min-width: 980px) {
+	.section h2 {
+		padding-top: 52px;
+		margin-top: -52px;
+	}
+	.section h3 {
+		padding-top: 52px;
+		margin-top: -52px;
+	}
+}
+p {
+	font-size: 13px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+	color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+	margin-top: 45px;
+}
+
+</style>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<h1>Cheltenham Festival 2015 - Twitter Analysis</h1>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="http://durtal.github.io/">durtal.github.io</a>
+		</div>
+
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li><a href="index.html">Intro</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Preparation <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="collection.html">Collecting</a></li>
+						<li><a href="cleaning.html">Cleaning</a></li>
+						<li><a href="classifying.html">Classifying</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Race Days <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="daily_overview.html">Overview</a></li>
+						<li class="divider"></li>
+						<li><a href="day_one.html">Day One</a></li>
+						<li><a href="day_two.html">Day Two</a></li>
+						<li><a href="day_three.html">Day Three</a></li>
+						<li class="disabled"><a href="#">Day Four</a></li>
+					</ul>
+				</li>
+				<!-- <li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Championship Races <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li class="disabled"><a href="#">Supreme</a></li>
+						<li class="disabled"><a href="#">Arkle</a></li>
+						<li class="disabled"><a href="#">Champion Hurdle</a></li>
+						<li class="disabled"><a href="#">Champion Chase</a></li>
+						<li class="disabled"><a href="#">RSA</a></li>
+						<li class="disabled"><a href="#">Gold Cup</a></li>
+					</ul>
+				</li> -->
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="useful_links.html">Useful Links</a></li>
+				<li><a href="https://github.com/durtal/cheltenham-festival-2015-twitter"><i class="fa fa-github fa-lg"></i>
+				</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<div id="header">
+<h1 class="title">day four</h1>
+</div>
+
+
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://durtal.github.io/cheltenham-festival-2015-twitter/day_four.html" data-text="Cheltenham Festival 2015 Day Four, Twitter Analysis" data-via="UTVilla" data-related="_RcappeR" data-hashtags="rstats,CheltenhamFestival">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<p>Day Four of the Festival saw more people tweet and more tweets than the previous two days, however it wasn’t close to the number sent on Day One, overall there were <strong>64494</strong> tweets collected. Tweets were collected if they mentioned any of the runners in the Championship Races (Grade 1s), or a number of related words. As mentioned in the post about <a href="day_one.html">Day One</a>, casual fans aren’t as likely to maintain interest over the four days, but casual fans probably did return for the climax of the Festival.</p>
+<p>The horses ‘tracked’ on day four are shown in the table below:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Day</th>
+<th align="left">Race</th>
+<th align="left">Time</th>
+<th align="left">Horses</th>
+<th align="left">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">4</td>
+<td align="left">Triumph Hurdle</td>
+<td align="left">13:30</td>
+<td align="left"><em>Baraka De Thaix, Beltor, Devilment, Dicosimo, Hargam, Kalkir, Karezak, Matorico, Officer Drivel, Old Guard, Pain Au Chocolat, Peace And Co, Prairie Town, Stars Over The Sea, Take A Break, Top Notch, Petite Parisienne</em></td>
+<td align="left">17</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">Albert Bartlett</td>
+<td align="left">14:40</td>
+<td align="left"><em>Arbre De Vie, Avant Tout, Black Hercules, Blaklion, Caracci Apache, Carningli, Definitly Red, Fletchers Flyer, Kylemore Lough, Martello Tower, Measureofmydreams, Milsean, Native River, No More Heroes, Out Sam, Shanroe Santos, Shantou Bob, Tea For Two, Thomas Brown, Value At Risk</em></td>
+<td align="left">20</td>
+</tr>
+<tr class="odd">
+<td align="left">4</td>
+<td align="left">Gold Cup</td>
+<td align="left">15:20</td>
+<td align="left"><em>Bobs Worth, Boston Bob, Carlingford Lough, Coneygree, Djakadam, Don Cossack, Holywell, Home Farm, Houblon Des Obeaux, Lord Windermere, Many Clouds, On His Own, River Choice, Road To Riches, Sam Winner, Silviniaco Conti, Smad Place, The Giant Bolster</em></td>
+<td align="left">18</td>
+</tr>
+</tbody>
+</table>
+<div id="timeline" class="section level3">
+<h3>timeline</h3>
+<p>The plot below shows the timeline on Day Three, included in the plot are three vertical lines charting the start times of the various races. These races were the <strong>Triumph Hurdle</strong> (13:30), the <strong>Albert Bartlett Novices Hurdle</strong> (14:40) and the <strong>Gold Cup</strong> (15:20). The frequency of tweets is slightly higher than on previous 2 days, and the culmination of the Gold Cup, won by Coneygree prompted a big reaction from the twitter crowd.</p>
+<p><img src="day_four_files/figure-html/unnamed-chunk-3-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="races-and-runners" class="section level3">
+<h3>races and runners</h3>
+<p>The two plots below shows the number of tweets that mention a runner from each Championship race, and the most mentioned horses. The most tweeted about race on Day Four was the Gold Cup, with 10294 tweets.</p>
+<div class="row">
+<div class="col-md-6">
+<p><img src="day_four_files/figure-html/unnamed-chunk-5-1.png" title="" alt="" width="550px" height="400px" style="display: block; margin: auto;" /></p>
+</div>
+<div class="col-md-6">
+<p><img src="day_four_files/figure-html/unnamed-chunk-6-1.png" title="" alt="" width="550px" height="400px" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<p>The race I’ll focus on in this post is the Gold Cup, but if anyone wants to see other races, then let me know.</p>
+</div>
+<div id="gold-cup" class="section level3">
+<h3>gold cup</h3>
+<p>The Gold Cup featured a relatively large field, with 18 runners, but it was won in very impressive fashion by novice Coneygree, the first time a novice had won the Gold Cup since Captain Christy in 1974. The plots below shows the number of tweets sent per minute that mentioned one of the 18 runners, and the sentiment of those same tweets of 10minute intervals. The volume of tweets increased massively as Coneygree romped home from the front. Also plotted in the sentiment plot is a loess curve, showing that sentiment of the race/winner is extremely positive, growing even more positive as the result sinks in. This was by far the most positive reaction to the winners over the entire Festival, a post looking at the winners of the Grade 1 races should be written up eventually.</p>
+<div class="row">
+<div class="col-md-6">
+<p><img src="day_four_files/figure-html/unnamed-chunk-8-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div class="col-md-6">
+<p><img src="day_four_files/figure-html/unnamed-chunk-9-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<p>Also of interest is which horses were popular on twitter, is there any wisdom in the twitter crowd? The plots below show the number of tweets that mention each of the 18 runners, the plot on the left is restricted to those tweets sent before the race, the plot to the right is tweets after the race. <strong>Silviniaco Conti</strong> was the favourite on twitter and was mentioned in <strong>41.4</strong>% of tweets that mentioned any runner in the race, he was sent off at 3/1 (implied ~25% chance of victory) by the bookies. Coneygree led from start to finish, setting a fierce gallop and jumping aggressively, putting rivals under pressure, it’s no surprise that he dominated the post race mentions in <strong>77.3</strong>% of tweets.</p>
+<div class="row">
+<div class="col-md-6">
+<p><img src="day_four_files/figure-html/unnamed-chunk-11-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div class="col-md-6">
+<p><img src="day_four_files/figure-html/unnamed-chunk-12-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>
