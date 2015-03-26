@@ -57,7 +57,7 @@ rnrs <- sapply(unique(subset(day_four_runners, G1)$date_time), function(x) subse
 racecounts <- lapply(rnrs, function(x) length(findtweets(day_four$text, x, counts = TRUE)))
 racecounts <- plyr::ldply(racecounts)
 names(racecounts) <- c("race", "count")
-racecounts$race <- c("Triumph", "Albert Bartlett", "Gold Cup")
+racecounts$race <- c("Triumph Hurdle", "Albert Bartlett", "Gold Cup")
 racecounts$race <- factor(racecounts$race, levels = unique(racecounts$race))
 
 rnrs <- as.list(subset(day_four_runners, G1)$horse)
@@ -72,7 +72,7 @@ runnercounts <- runnercounts %>%
 
 ### races and runners
 
-The two plots below shows the number of tweets that mention a runner from each Championship race, and the most mentioned horses.  The most tweeted about race on Day Four was the Gold Cup, with `r racecounts$count[which(racecounts$race == "Gold Cup")]` tweets.
+The two plots below shows the number of tweets that mention a runner from each Championship race, and the most mentioned horses.  The most tweeted about race on Day Four was the Gold Cup, with `r racecounts$count[which(racecounts$race == "Gold Cup")]`.
 
 <div class="row">
 <div class="col-md-6">
